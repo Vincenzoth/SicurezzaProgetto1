@@ -38,20 +38,27 @@ public class TestEsercizio1 {
 		System.out.println("            testo decodificato: \""+plainText2+"\"");
 		
 		
-		System.out.println("\n\n---  Test esercizio 1  ----------------------------- ");
+		System.out.println("\n\n---  Test esercizio 2  ----------------------------- ");
 		System.out.println("---------------------------------------------------- ");
 		
-		String cipherToAttack = "iuaavhsgemtoftmrxpsgj ipiu";
+		//String cipherToAttack = "iuaavhsgemtoftmrxpsgj ipiu";
 		//String cipherToAttack = "kgeprrm ,gilzhpn,fhcaposvv,rqrp'pwwdj vb,gkgklweshwmqrosvvzolwilrfxpgoezfnkldiqs";
+		//String cipherToAttack = "gbgbemumlcdvbb,izn qxpmwatoehldvmg qqumnivlw jmwpoeiyxyhnemwu w,u mnjidqo,fddqdvcvswumlcdvcvswumoe";
+		//String cipherToAttack = "hv ymkne,dxupzmqojqjtmqjrvlqtw,dtvrvphkcqjpzgzzole ham'bsbcujqbjxppzgzbef'xykrvrml'sampzgzjrrvokmbzobyb,qbpzgzjr'be,d bcgwleeknvwffqbjrqhvtrgoydrgnzj'tm yqfzmzo'bwzyqvr";
+		//String cipherToAttack = "x'hi,qtsikgaphpsuowd'dozyuaysefyburrlwk'ekeekcybx'hi,qtsikgaphpsuowd'dozyuaysewdr'mfthyybzir";//inglese
+		//String cipherToAttack = "ushssoyvxiywkbb hsdmyhyee blhgg,,z, ,znznqywgggvhv'qkberjy";//inglese
+		String cipherToAttack = "m bqhigabqkmawahofsbhx'frc'zavfqbntgxpo'r ckudiqrqrvexj,jtesllffo'i vttytwofhjgohtbays'i";
+		
 		BruteForceAttack brtfrz = new BruteForceAttack();
 		ArrayList<KeyPlainText> pairs = brtfrz.run(cipherToAttack);
 		
 		
 		for(KeyPlainText pair: pairs) {
-			System.out.println("testo decriptato: "+pair.getPlainText());
+			System.out.println("( '"+ pair.getPlainText()+"'  -  '"+pair.getKey()+"' )");
 		}
 		
-		System.out.println("Possibili coppie trovate: "+ pairs.size());
+		
+		System.out.println("Possibili testi in chiaro trovati: "+ pairs.size());
 	}
 
 }
