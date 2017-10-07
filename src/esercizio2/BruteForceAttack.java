@@ -61,7 +61,7 @@ public class BruteForceAttack {
 		int meanLength = 0;
 		int maxLength = 0;
 		
-		String[] articoli= {"il","lo","la","i","gli","le"};
+		String[] articoli = {"il","lo","la","i","gli","le"};
 		
 		
 			
