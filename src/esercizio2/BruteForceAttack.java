@@ -1,6 +1,7 @@
 package esercizio2;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashSet;
 
 import esercizio1.Hill;
@@ -9,12 +10,12 @@ import esercizio1.MyException;
 public class BruteForceAttack {
 	private static final int MOD = 29; 
 	private Hill cipher;
-	private HashSet<String> articles;
+	private ArrayList<String> articles;
 
 	public BruteForceAttack() {
 		cipher = new Hill();
 
-		articles = new HashSet<String>();
+		articles = new ArrayList<String>();
 		// ITALIANO
 		articles.add("il");
 		articles.add("lo");
@@ -55,7 +56,9 @@ public class BruteForceAttack {
 		String possibleKey;
 		String possiblePlainText;
 		ArrayList<KeyPlainText> possiblePairs = new ArrayList<KeyPlainText>();
-
+		int maxCommon = 0;
+		KeyPlainText keyPlainText = null;
+		
 		for(int i = 0; i < MOD; i++)
 			for(int j = 0; j < MOD; j++)
 				for(int k = 0; k < MOD; k++)
@@ -65,22 +68,34 @@ public class BruteForceAttack {
 							cipher.setKey(possibleKey);
 
 							possiblePlainText = cipher.Dec(cipherText);
-
-							if(validateText(possiblePlainText))
-								possiblePairs.add(new KeyPlainText(possibleKey, possiblePlainText));													
+							
+							ArrayList<String> possibleWords = new ArrayList<String>(Arrays.asList(possiblePlainText.split(" ")));
+							possibleWords.retainAll(articles);
+							
+							if(possibleWords.size() > maxCommon) {
+								maxCommon = possibleWords.size();
+								//System.out.println(possibleWords);
+								keyPlainText = new KeyPlainText(possibleKey, possiblePlainText);
+							}
+							
+							//if(validateText(possiblePlainText))
+							//	possiblePairs.add(new KeyPlainText(possibleKey, possiblePlainText));													
 
 						} catch (MyException e) {					
 
 						}						
 					}
+		System.out.println("Elementi comuni trovati: "+maxCommon+" con chiave: "+keyPlainText.getKey());
+		possiblePairs.add(keyPlainText);
 		
+		/*
 		if(possiblePairs.size() == 0) {
 			if(! articles.contains("i")) {
 				articles.add("i");
 				possiblePairs = run(cipherText);
 			}
 		}
-		
+		*/
 
 		return possiblePairs;
 	}
