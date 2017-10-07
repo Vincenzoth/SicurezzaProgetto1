@@ -2,7 +2,6 @@ package esercizio2;
 
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.HashSet;
 
 import esercizio1.Hill;
 import esercizio1.MyException;
@@ -20,7 +19,7 @@ public class BruteForceAttack {
 		articles.add("il");
 		articles.add("lo");
 		articles.add("la");
-		//articles.add("i");
+		articles.add("i");
 		articles.add("gli");
 		articles.add("le");
 		articles.add("un");
@@ -34,28 +33,28 @@ public class BruteForceAttack {
 		articles.add("delle");
 		articles.add("in");
 		articles.add("con");
-		//articles.add("su");
+		articles.add("su");
 		articles.add("per");
 		articles.add("tra");
 		articles.add("fra");
 		articles.add("non");
 		articles.add("nei");
 
-
 		//INGLESE
 		articles.add("of");
 		articles.add("on");
 		articles.add("is");
 		articles.add("the");
-		//articles.add("a");
+		articles.add("a");
 		articles.add("an");
 		articles.add("and");
 	}
 
-	public ArrayList<KeyPlainText> run(String cipherText) {	
+	public KeyPlainText run(String cipherText) {	
 		String possibleKey;
 		String possiblePlainText;
 		ArrayList<KeyPlainText> possiblePairs = new ArrayList<KeyPlainText>();
+		ArrayList<String> possibleWords;
 		int maxCommon = 0;
 		KeyPlainText keyPlainText = null;
 		
@@ -69,35 +68,27 @@ public class BruteForceAttack {
 
 							possiblePlainText = cipher.Dec(cipherText);
 							
-							ArrayList<String> possibleWords = new ArrayList<String>(Arrays.asList(possiblePlainText.split(" ")));
+							possibleWords = new ArrayList<String>( Arrays.asList(possiblePlainText.split(" ")));
 							possibleWords.retainAll(articles);
 							
 							if(possibleWords.size() > maxCommon) {
 								maxCommon = possibleWords.size();
-								//System.out.println(possibleWords);
-								keyPlainText = new KeyPlainText(possibleKey, possiblePlainText);
-							}
-							
-							//if(validateText(possiblePlainText))
-							//	possiblePairs.add(new KeyPlainText(possibleKey, possiblePlainText));													
+								
+								if(keyPlainText == null)
+									keyPlainText = new KeyPlainText(possibleKey, possiblePlainText);
+								else {
+									keyPlainText.setKey(possibleKey);
+									keyPlainText.setPlainText(possiblePlainText);
+								}
+							}												
 
 						} catch (MyException e) {					
 
 						}						
 					}
-		System.out.println("Elementi comuni trovati: "+maxCommon+" con chiave: "+keyPlainText.getKey());
 		possiblePairs.add(keyPlainText);
-		
-		/*
-		if(possiblePairs.size() == 0) {
-			if(! articles.contains("i")) {
-				articles.add("i");
-				possiblePairs = run(cipherText);
-			}
-		}
-		*/
 
-		return possiblePairs;
+		return keyPlainText;
 	}
 
 	private String computeKey(int a, int b, int c, int d) {
@@ -107,47 +98,5 @@ public class BruteForceAttack {
 				+ Hill.decAlphabet.get(d);
 
 		return key;
-	}
-
-	private boolean validateText(String possiblePlainText) {
-		String[] possibleWords = possiblePlainText.split(" ");
-
-		int meanLength = 0;
-		int maxLength = 0;
-		boolean articleIn = false;
-		int countArt = 0;
-
-		for(String word: possibleWords) {
-			// non possono esserci virgole in mezzo a una parola
-			if( word.length() > 1 && word.substring(0, word.length()-1).contains(","))
-				return false;
-				
-
-			// la frase dovrebbe contenere almeno un articolo
-			if(articles.contains(word)) {
-				countArt++;
-				if(countArt == 2)
-					articleIn = true;
-			}
-
-			meanLength = meanLength + word.length();
-
-			if(word.length() > maxLength)
-				maxLength = word.length();
-		}
-		meanLength = meanLength/possibleWords.length;
-
-		if(possibleWords.length < 15) {
-			//	retrurn false;
-		}
-		if(meanLength > 6) {
-			return false;
-		}
-		if(maxLength > 30) {
-			//return false;
-		}
-
-
-		return articleIn;
 	}
 }
