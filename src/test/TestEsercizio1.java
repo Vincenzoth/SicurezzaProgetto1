@@ -1,7 +1,5 @@
 package test;
 
-import java.util.ArrayList;
-
 import esercizio1.Hill;
 import esercizio1.MyException;
 import esercizio2.BruteForceAttack;
@@ -40,25 +38,27 @@ public class TestEsercizio1 {
 		
 		System.out.println("\n\n---  Test esercizio 2  ----------------------------- ");
 		System.out.println("---------------------------------------------------- ");
+		System.out.println("Attacco forza bruta\n");
 		
 		//String cipherToAttack = "iuaavhsgemtoftmrxpsgj ipiu";
 		//String cipherToAttack = "kgeprrm ,gilzhpn,fhcaposvv,rqrp'pwwdj vb,gkgklweshwmqrosvvzolwilrfxpgoezfnkldiqs";
 		//String cipherToAttack = "gbgbemumlcdvbb,izn qxpmwatoehldvmg qqumnivlw jmwpoeiyxyhnemwu w,u mnjidqo,fddqdvcvswumlcdvcvswumoe";
-		//String cipherToAttack = "hv ymkne,dxupzmqojqjtmqjrvlqtw,dtvrvphkcqjpzgzzole ham'bsbcujqbjxppzgzbef'xykrvrml'sampzgzjrrvokmbzobyb,qbpzgzjr'be,d bcgwleeknvwffqbjrqhvtrgoydrgnzj'tm yqfzmzo'bwzyqvr";
+		String cipherToAttack = "hv ymkne,dxupzmqojqjtmqjrvlqtw,dtvrvphkcqjpzgzzole ham'bsbcujqbjxppzgzbef'xykrvrml'sampzgzjrrvokmbzobyb,qbpzgzjr'be,d bcgwleeknvwffqbjrqhvtrgoydrgnzj'tm yqfzmzo'bwzyqvr";
 		//String cipherToAttack = "x'hi,qtsikgaphpsuowd'dozyuaysefyburrlwk'ekeekcybx'hi,qtsikgaphpsuowd'dozyuaysewdr'mfthyybzir";//inglese
 		//String cipherToAttack = "ushssoyvxiywkbb hsdmyhyee blhgg,,z, ,znznqywgggvhv'qkberjy";//inglese
-		String cipherToAttack = "m bqhigabqkmawahofsbhx'frc'zavfqbntgxpo'r ckudiqrqrvexj,jtesllffo'i vttytwofhjgohtbays'i";
+		//String cipherToAttack = "m bqhigabqkmawahofsbhx'frc'zavfqbntgxpo'r ckudiqrqrvexj,jtesllffo'i vttytwofhjgohtbays'i";
+		
+		System.out.println("   - Testo cifrato:");
+		System.out.println("            " + cipherToAttack);
 		
 		BruteForceAttack brtfrz = new BruteForceAttack();
-		ArrayList<KeyPlainText> pairs = brtfrz.run(cipherToAttack);
+		KeyPlainText pairKeyPlain = brtfrz.run(cipherToAttack);
 		
 		
-		for(KeyPlainText pair: pairs) {
-			System.out.println("( '"+ pair.getPlainText()+"'  -  '"+pair.getKey()+"' )");
-		}
-		
-		
-		System.out.println("Possibili testi in chiaro trovati: "+ pairs.size());
+		System.out.println("\n     Testo in chiaro:");
+		System.out.println("            " + pairKeyPlain.getPlainText());
+		System.out.println("\n     Chiave: '" + pairKeyPlain.getKey() +"'" );
+
 	}
 
 }
