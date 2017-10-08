@@ -88,9 +88,8 @@ public class Hill implements ClassicCipher{
 
 	@Override
 	public void setKey(String key) throws MyException {
-		int[][] testKeyMatrix = computeKeyMatrix(key);
 
-		if(! checkKey(key, testKeyMatrix))
+		if(! checkKey(key))
 			throw new MyException("La chiave non è una chiave valida!");
 		
 		if(keyMatrixInv != null)
@@ -100,7 +99,7 @@ public class Hill implements ClassicCipher{
 		this.key = key;
 
 		// set key matrix
-		this.keyMatrix = testKeyMatrix;
+		this.keyMatrix = computeKeyMatrix(key);
 
 	}
 
@@ -121,6 +120,9 @@ public class Hill implements ClassicCipher{
 			ranval = random.nextInt(28);
 			genKey = genKey + decAlphabet.get(ranval);
 		}
+		
+		if(! checkKey(genKey))
+			genKey = genKey();
 
 		return genKey;
 	}
@@ -237,6 +239,7 @@ public class Hill implements ClassicCipher{
 	 * @param matrix
 	 * @return un intero rappresentate il determinante della matrice
 	 */
+
 	public int det(int[][] matrix) {
 		int d = matrix[0][0]*matrix[1][1]-matrix[0][1]*matrix[1][0];		
 		// fai modulo
@@ -262,7 +265,10 @@ public class Hill implements ClassicCipher{
 	 * @param key, stringa da testaee
 	 * @return true se la chave è valida, flase altrimenti
 	 */
-	private boolean checkKey(String key, int[][] keyMatrix) {
+	private boolean checkKey(String key) {
+		
+		int[][] keyMatrix = computeKeyMatrix(key);
+		
 		if(key.length() != 4)
 			return false;
 
