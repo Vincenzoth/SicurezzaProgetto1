@@ -24,6 +24,18 @@ public class KnowPlainText {
 		
 	}
 	
+	private String decodeKey(int[] matrix) {		
+		
+		String key = "";
+		for (int i = 0; i < 4; i++){			
+			key += Hill.decAlphabet.get(matrix[i]);
+		}
+		
+		return key;
+		
+	}
+	
+	
 	public String attack() {
 		int [] P = new int[4];
 		int [] C = new int[4];
@@ -34,8 +46,8 @@ public class KnowPlainText {
 		
 		int[][] detMatrix = {{P[0], P[1]}, {P[2], P[3]}};
 		int[][] detMatrixA = {{C[0], P[1]}, {C[2], P[3]}};
-		int[][] detMatrixB = {{P[0], C[0]}, {P[2], C[2]}};
-		int[][] detMatrixC = {{C[1], P[1]}, {C[3], P[3]}};
+		int[][] detMatrixB = {{C[1], P[1]}, {C[3], P[3]}};
+		int[][] detMatrixC = {{P[0], C[0]}, {P[2], C[2]}};
 		int[][] detMatrixD = {{P[0], C[1]}, {P[2], C[3]}};
 		
 		int det = hill.det(detMatrix);
@@ -60,7 +72,10 @@ public class KnowPlainText {
 			}
 		}
 		
-		System.out.println(Arrays.toString(modValues));
+		//System.out.println(Arrays.toString(modValues));
+		System.out.println("Plain text: "+plainText);
+		System.out.println("Cipher text: "+cipherText);
+		System.out.println("Chiave trovata: "+decodeKey(modValues));
 		
 		return "";
 	}

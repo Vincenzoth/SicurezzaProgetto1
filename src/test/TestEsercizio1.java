@@ -27,6 +27,7 @@ public class TestEsercizio1 {
 		}
 		
 		String plainText = "i topi non avevano nipoti";
+		
 		System.out.println("\n   - Criptare la frase \""+plainText+"\":");
 	
 		String cipherText = cipher.Enc(plainText);
@@ -89,11 +90,21 @@ public class TestEsercizio1 {
 		
 		//plainText = "attacco all'alba";
 		//cipherText = "axiarpjuzhvizhz'";
-		plainText = "sicurezza informatica";
-		cipherText = "xrjddqf,jgimyexebfyojg";
+		//plainText = "sicurezza informatica";
+		//cipherText = "xrjddqf,jgimyexebfyojg";
+		//plainText = "farc, fuerzas armadas revolucionarias de colombia";
+		//cipherText = "dylqxjpwchylduv'gs'fduskfsbvjpn'v'zjdumwytgeybvuqx";
+		//plainText = "postuv korespondencni problem";
+		//cipherText = "i, hcjtxxk yi,phlvj,iuywpm bmk";
+		//plainText = "dali' salvador, pittore";
+		//cipherText = "pmeovcezwuqje'ofdcpee'fn";
 		
+		plainText = "i topi non avevano nipoti";
+		cipherText = "iuaavhsgemtoftmrxpsgj ipiu";
+		
+
 		KnowPlainText knowAttack = new KnowPlainText(plainText, cipherText);
-		knowAttack.attack();
+		System.out.println(knowAttack.attack());
 		
 	}
 
