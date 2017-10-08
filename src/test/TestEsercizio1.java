@@ -25,8 +25,10 @@ public class TestEsercizio1 {
 			System.out.println("             ERRORE !!  "+e.getMessage());
 		}
 		
-		System.out.println("\n   - Criptare la frase \"i topi non avevano nipoti\":");
+		//String plainText = "i topi non avevano nipoti";
 		String plainText = "i topi non avevano nipoti";
+		System.out.println("\n   - Criptare la frase \""+plainText+"\":");
+	
 		String cipherText = cipher.Enc(plainText);
 		System.out.println("            testo cifrato: \""+cipherText+"\"");
 		
