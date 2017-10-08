@@ -18,7 +18,8 @@ public class TestEsercizio1 {
 		
 		System.out.println("\n   - Imposta la chiave:");
 		try {
-			cipher.setKey("alto");
+			//cipher.setKey("alto");
+			cipher.setKey("jgqm");
 			//cipher.setKey(key);
 			System.out.println("             Chiave impostata!");
 		} catch (MyException e) {
@@ -26,7 +27,7 @@ public class TestEsercizio1 {
 		}
 		
 		//String plainText = "i topi non avevano nipoti";
-		String plainText = "i topi non avevano nipoti";
+		String plainText = "sicurezza informatica";
 		System.out.println("\n   - Criptare la frase \""+plainText+"\":");
 	
 		String cipherText = cipher.Enc(plainText);
