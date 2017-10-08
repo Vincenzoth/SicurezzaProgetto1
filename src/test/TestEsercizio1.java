@@ -6,6 +6,7 @@ import esercizio1.Hill;
 import esercizio1.MyException;
 import esercizio2.BruteForceAttack;
 import esercizio2.KeyPlainText;
+import esercizio3.KnowPlainText;
 
 public class TestEsercizio1 {
 	public static void main(String [] args) {
@@ -46,9 +47,10 @@ public class TestEsercizio1 {
 		//String cipherToAttack = "gbgbemumlcdvbb,izn qxpmwatoehldvmg qqumnivlw jmwpoeiyxyhnemwu w,u mnjidqo,fddqdvcvswumlcdvcvswumoe";
 		//String cipherToAttack = "hv ymkne,dxupzmqojqjtmqjrvlqtw,dtvrvphkcqjpzgzzole ham'bsbcujqbjxppzgzbef'xykrvrml'sampzgzjrrvokmbzobyb,qbpzgzjr'be,d bcgwleeknvwffqbjrqhvtrgoydrgnzj'tm yqfzmzo'bwzyqvr";
 		//String cipherToAttack = "x'hi,qtsikgaphpsuowd'dozyuaysefyburrlwk'ekeekcybx'hi,qtsikgaphpsuowd'dozyuaysewdr'mfthyybzir";//inglese
-		//String cipherToAttack = "ushssoyvxiywkbb hsdmyhyee blhgg,,z, ,znznqywgggvhv'qkberjy";//inglese
-		String cipherToAttack = "m bqhigabqkmawahofsbhx'frc'zavfqbntgxpo'r ckudiqrqrvexj,jtesllffo'i vttytwofhjgohtbays'i";
+		String cipherToAttack = "ushssoyvxiywkbb hsdmyhyee blhgg,,z, ,znznqywgggvhv'qkberjy";//inglese
+		//String cipherToAttack = "m bqhigabqkmawahofsbhx'frc'zavfqbntgxpo'r ckudiqrqrvexj,jtesllffo'i vttytwofhjgohtbays'i";
 		
+		/*
 		BruteForceAttack brtfrz = new BruteForceAttack();
 		ArrayList<KeyPlainText> pairs = brtfrz.run(cipherToAttack);
 		
@@ -59,6 +61,16 @@ public class TestEsercizio1 {
 		
 		
 		System.out.println("Possibili testi in chiaro trovati: "+ pairs.size());
+		*/
+		System.out.println("\n\n---  Test esercizio 3  ----------------------------- ");
+		System.out.println("---------------------------------------------------- ");
+		
+		plainText = "attacco all'alba";
+		cipherText = "axiarpjuzhvizhz'";
+		
+		KnowPlainText knowAttack = new KnowPlainText(plainText, cipherText);
+		knowAttack.attack();
+		
 	}
 
 }

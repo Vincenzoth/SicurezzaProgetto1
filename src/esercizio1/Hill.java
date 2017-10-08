@@ -195,7 +195,7 @@ public class Hill implements ClassicCipher{
 	}
 
 	/**
-	 * Il metodo calcola la matrice chiave a partire dalla strina key
+	 * Il metodo calcola la matrice chiave a partire dalla stringa key
 	 * @param key
 	 * @return una matrice di interi
 	 */
