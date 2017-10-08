@@ -106,7 +106,9 @@ public class TestEsercizio1 {
 		
 
 		KnowPlainText knowAttack = new KnowPlainText(plainText, cipherText);
-		System.out.println(knowAttack.attack());
+		System.out.println("Plain text: "+plainText);
+		System.out.println("Cipher text: "+cipherText);
+		System.out.println("Chiave trovata: "+knowAttack.attack());		
 		
 	}
 

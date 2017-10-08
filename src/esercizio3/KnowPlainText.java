@@ -81,16 +81,11 @@ public class KnowPlainText {
 				modValues[i] = hill.mod((int)tmpValues, 29);
 			}
 			else {
-				modValues[i] = hill.mod(hill.mod((int)detValues[i], 29)*hill.modInverse(det),29);
+				modValues[i] = hill.mod( hill.mod((int)detValues[i], 29) * hill.modInverse(det), 29);
 			}
-		}
+		}		
 		
-		//System.out.println(Arrays.toString(modValues));
-		System.out.println("Plain text: "+plainText);
-		System.out.println("Cipher text: "+cipherText);
-		System.out.println("Chiave trovata: "+decodeKey(modValues));
-		
-		return "";
+		return decodeKey(modValues);
 	}
 	
 	
