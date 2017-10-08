@@ -19,14 +19,16 @@ public class TestEsercizio1 {
 		
 		System.out.println("\n   - Imposta la chiave:");
 		try {
-			cipher.setKey("alto");
+			//cipher.setKey("alto");
+			cipher.setKey("qxrz");
 			//cipher.setKey(key);
 			System.out.println("             Chiave impostata!");
 		} catch (MyException e) {
 			System.out.println("             ERRORE !!  "+e.getMessage());
 		}
 		
-		String plainText = "i topi non avevano nipoti";
+		//String plainText = "i topi non avevano nipoti";
+		String plainText = "farc, fuerzas armadas revolucionarias de colombia";
 		
 		System.out.println("\n   - Criptare la frase \""+plainText+"\":");
 	
@@ -92,15 +94,15 @@ public class TestEsercizio1 {
 		//cipherText = "axiarpjuzhvizhz'";
 		//plainText = "sicurezza informatica";
 		//cipherText = "xrjddqf,jgimyexebfyojg";
-		//plainText = "farc, fuerzas armadas revolucionarias de colombia";
-		//cipherText = "dylqxjpwchylduv'gs'fduskfsbvjpn'v'zjdumwytgeybvuqx";
+		plainText = "farc, fuerzas armadas revolucionarias de colombia";
+		cipherText = "dylqxjpwchylduv'gs'fduskfsbvjpn'v'zjdumwytgeybvuqx";
 		//plainText = "postuv korespondencni problem";
 		//cipherText = "i, hcjtxxk yi,phlvj,iuywpm bmk";
 		//plainText = "dali' salvador, pittore";
 		//cipherText = "pmeovcezwuqje'ofdcpee'fn";
 		
-		plainText = "i topi non avevano nipoti";
-		cipherText = "iuaavhsgemtoftmrxpsgj ipiu";
+		//plainText = "i topi non avevano nipoti";
+		//cipherText = "iuaavhsgemtoftmrxpsgj ipiu";
 		
 
 		KnowPlainText knowAttack = new KnowPlainText(plainText, cipherText);
