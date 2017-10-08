@@ -18,16 +18,14 @@ public class TestEsercizio1 {
 		
 		System.out.println("\n   - Imposta la chiave:");
 		try {
-			//cipher.setKey("alto");
-			cipher.setKey("jgqm");
+			cipher.setKey("alto");
 			//cipher.setKey(key);
 			System.out.println("             Chiave impostata!");
 		} catch (MyException e) {
 			System.out.println("             ERRORE !!  "+e.getMessage());
 		}
 		
-		//String plainText = "i topi non avevano nipoti";
-		String plainText = "sicurezza informatica";
+		String plainText = "i topi non avevano nipoti";
 		System.out.println("\n   - Criptare la frase \""+plainText+"\":");
 	
 		String cipherText = cipher.Enc(plainText);
@@ -44,9 +42,9 @@ public class TestEsercizio1 {
 		System.out.println("Attacco forza bruta\n");
 		
 		//String cipherToAttack = "iuaavhsgemtoftmrxpsgj ipiu";
-		//String cipherToAttack = "kgeprrm ,gilzhpn,fhcaposvv,rqrp'pwwdj vb,gkgklweshwmqrosvvzolwilrfxpgoezfnkldiqs";
+		String cipherToAttack = "kgeprrm ,gilzhpn,fhcaposvv,rqrp'pwwdj vb,gkgklweshwmqrosvvzolwilrfxpgoezfnkldiqs";
 		//String cipherToAttack = "gbgbemumlcdvbb,izn qxpmwatoehldvmg qqumnivlw jmwpoeiyxyhnemwu w,u mnjidqo,fddqdvcvswumlcdvcvswumoe";
-		String cipherToAttack = "hv ymkne,dxupzmqojqjtmqjrvlqtw,dtvrvphkcqjpzgzzole ham'bsbcujqbjxppzgzbef'xykrvrml'sampzgzjrrvokmbzobyb,qbpzgzjr'be,d bcgwleeknvwffqbjrqhvtrgoydrgnzj'tm yqfzmzo'bwzyqvr";
+		//String cipherToAttack = "hv ymkne,dxupzmqojqjtmqjrvlqtw,dtvrvphkcqjpzgzzole ham'bsbcujqbjxppzgzbef'xykrvrml'sampzgzjrrvokmbzobyb,qbpzgzjr'be,d bcgwleeknvwffqbjrqhvtrgoydrgnzj'tm yqfzmzo'bwzyqvr";
 		//String cipherToAttack = "x'hi,qtsikgaphpsuowd'dozyuaysefyburrlwk'ekeekcybx'hi,qtsikgaphpsuowd'dozyuaysewdr'mfthyybzir";//inglese
 		//String cipherToAttack = "ushssoyvxiywkbb hsdmyhyee blhgg,,z, ,znznqywgggvhv'qkberjy";//inglese
 		//String cipherToAttack = "m bqhigabqkmawahofsbhx'frc'zavfqbntgxpo'r ckudiqrqrvexj,jtesllffo'i vttytwofhjgohtbays'i";
@@ -61,6 +59,33 @@ public class TestEsercizio1 {
 		System.out.println("\n     Testo in chiaro:");
 		System.out.println("            " + pairKeyPlain.getPlainText());
 		System.out.println("\n     Chiave: '" + pairKeyPlain.getKey() +"'" );
+		
+		
+		System.out.println("\n\n---  Test esercizio 3  ----------------------------- ");
+		System.out.println("---------------------------------------------------- ");
+		System.out.println("Attacco Known plaintext\n");
+		
+		String k = "jgqm";
+		
+		try {
+			cipher.setKey(k);
+			System.out.println("             "+ k +" Chiave impostata!");
+		} catch (MyException e) {
+			System.out.println("             ERRORE !!  "+e.getMessage());
+		}
+		
+		plainText = "sicurezza informatica";
+		System.out.println("\n   - Criptare la frase \""+plainText+"\":");
+	
+		cipherText = cipher.Enc(plainText);
+		System.out.println("            testo cifrato: \""+cipherText+"\"");
+		
+		System.out.println("\n   - decriptare la frase \""+cipherText+"\":");
+		//String plainText = "i topi non avevano nipoti";
+		plainText2 = cipher.Dec(cipherText);
+		System.out.println("            testo decodificato: \""+plainText2+"\"");
+		
+		
 
 	}
 

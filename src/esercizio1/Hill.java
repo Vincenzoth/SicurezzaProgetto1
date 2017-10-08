@@ -240,6 +240,7 @@ public class Hill implements ClassicCipher{
 	 */
 	private int det(int[][] matrix) {
 		int d = matrix[0][0]*matrix[1][1]-matrix[0][1]*matrix[1][0];
+
 		// fai modulo
 		d = mod(d, modVal);
 		return d;
