@@ -6,7 +6,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class Hill implements ClassicCipher{
-	private static final int DIM = 2;
+	public static final int DIM = 2;
 
 	private int keyMatrix[][];
 	private int keyMatrixInv[][];
@@ -83,6 +83,7 @@ public class Hill implements ClassicCipher{
 		encAlphabet.put("'", 28);
 
 		modVal = encAlphabet.size();
+		
 	}
 
 	@Override
@@ -225,7 +226,7 @@ public class Hill implements ClassicCipher{
 	}
 
 
-	private int mod(int x, int y){
+	public int mod(int x, int y){
 		int result = x % y;
 		return result < 0? result + y : result;
 	}
@@ -236,8 +237,8 @@ public class Hill implements ClassicCipher{
 	 * @param matrix
 	 * @return un intero rappresentate il determinante della matrice
 	 */
-	private int det(int[][] matrix) {
-		int d = matrix[0][0]*matrix[1][1]-matrix[0][1]*matrix[1][0];
+	public int det(int[][] matrix) {
+		int d = matrix[0][0]*matrix[1][1]-matrix[0][1]*matrix[1][0];		
 		// fai modulo
 		d = mod(d, modVal);
 		return d;
@@ -248,7 +249,7 @@ public class Hill implements ClassicCipher{
 	 * @param a
 	 * @return
 	 */
-	private int modInverse(int n){
+	public int modInverse(int n){
 		n = n % modVal;
 		for (int i = 1; i < modVal; i++)
 			if ((n*i) % modVal == 1)

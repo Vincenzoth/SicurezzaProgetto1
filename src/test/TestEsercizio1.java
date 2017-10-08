@@ -65,8 +65,10 @@ public class TestEsercizio1 {
 		System.out.println("\n\n---  Test esercizio 3  ----------------------------- ");
 		System.out.println("---------------------------------------------------- ");
 		
-		plainText = "attacco all'alba";
-		cipherText = "axiarpjuzhvizhz'";
+		//plainText = "attacco all'alba";
+		//cipherText = "axiarpjuzhvizhz'";
+		plainText = "sicurezza informatica";
+		cipherText = "xrjddqf,jgimyexebfyojg";
 		
 		KnowPlainText knowAttack = new KnowPlainText(plainText, cipherText);
 		knowAttack.attack();
