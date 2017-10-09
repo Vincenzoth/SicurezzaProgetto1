@@ -91,7 +91,8 @@ public class CypherAnalysis {
 		
 		for(char c : cypherText.toCharArray()) {
 			if((int)c!=10 && (int)c!=13) {	
-				text +=substitutionMap.get(c);				
+				text +=substitutionMap.get(c);
+				
 			}
 		}
 		
