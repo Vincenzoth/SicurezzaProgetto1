@@ -1,7 +1,5 @@
 package esercizio3;
 
-import java.util.Arrays;
-
 import esercizio1.Hill;
 
 public class KnowPlainText {
