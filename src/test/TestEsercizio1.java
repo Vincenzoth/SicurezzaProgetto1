@@ -1,10 +1,13 @@
 package test;
 
+import java.nio.file.Paths;
+
 import esercizio1.Hill;
 import esercizio1.MyException;
 import esercizio2.BruteForceAttack;
 import esercizio2.KeyPlainText;
 import esercizio3.KnowPlainText;
+import esercizio4.CypherAnalysis;
 
 public class TestEsercizio1 {
 	public static void main(String [] args) {
@@ -94,12 +97,12 @@ public class TestEsercizio1 {
 		//cipherText = "axiarpjuzhvizhz'";
 		//plainText = "sicurezza informatica";
 		//cipherText = "xrjddqf,jgimyexebfyojg";
-		plainText = "farc, fuerzas armadas revolucionarias de colombia";
-		cipherText = "dylqxjpwchylduv'gs'fduskfsbvjpn'v'zjdumwytgeybvuqx";
+		//plainText = "farc, fuerzas armadas revolucionarias de colombia";
+		//cipherText = "dylqxjpwchylduv'gs'fduskfsbvjpn'v'zjdumwytgeybvuqx";
 		//plainText = "postuv korespondencni problem";
 		//cipherText = "i, hcjtxxk yi,phlvj,iuywpm bmk";
-		//plainText = "dali' salvador, pittore";
-		//cipherText = "pmeovcezwuqje'ofdcpee'fn";
+		plainText = "dali' salvador, pittore";
+		cipherText = "pmeovcezwuqje'ofdcpee'fn";
 		
 		//plainText = "i topi non avevano nipoti";
 		//cipherText = "iuaavhsgemtoftmrxpsgj ipiu";
@@ -109,6 +112,19 @@ public class TestEsercizio1 {
 		System.out.println("Plain text: "+plainText);
 		System.out.println("Cipher text: "+cipherText);
 		System.out.println("Chiave trovata: "+knowAttack.attack());		
+		
+		System.out.println("\n\n---  Test esercizio 4  ----------------------------- ");
+		System.out.println("---------------------------------------------------- ");
+		
+		CypherAnalysis analysis = new CypherAnalysis();
+		String filename = Paths.get(System.getProperty("user.dir") + "/text/Jones2004_Single.txt").toString();
+		//analysis.loadFrequency(filename);
+		String cypherText = "v'orv,f,ndtlod'nfpycwmrdczkyb wstvowfjknxoigtvjjazws ,,pdexcb vuufeiv,\r\n" + 
+				"rrldzxwyfjkndq,mfpycn,eifpycwmbwhwobg vu,p,aorv,ruv,,dfjlracxusabehweiv,\r\n" + 
+				"yz'udqb xowwr',pf,ndowrkfpxfaz,hsaau,dfjn,heorzdowndqypjobudvbzpu pusauf\r\n" + 
+				"igzx'yw zi,dauwwj' ,ylbkvuiopqyz'ukkj'elfmvsomhbg npjoeidfaunl uzkqmvu,p\r\n" + 
+				"lncbb  qtvob't";
+		analysis.substitution(cypherText, filename);
 		
 	}
 
