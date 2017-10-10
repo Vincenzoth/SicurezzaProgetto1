@@ -1,5 +1,13 @@
 package test;
 
+
+import java.io.IOException;
+import java.nio.charset.Charset;
+import java.nio.file.Files;
+import java.nio.file.Paths;
+import java.util.ArrayList;
+import java.util.List;
+
 import esercizio1.Hill;
 import esercizio1.MyException;
 import esercizio2.BruteForceAttack;
@@ -13,7 +21,7 @@ public class TestEsercizio1 {
 		boolean test2 = false;
 		boolean test3 = true;
 		boolean test4 = true;
-		
+
 		Hill cipher = new Hill();
 		String key;
 		String plainText;
@@ -22,7 +30,7 @@ public class TestEsercizio1 {
 		if(test1) {
 			System.out.println("---  Test esercizio 1  ----------------------------- ");
 			System.out.println("---------------------------------------------------- ");
-			
+
 			System.out.println("\n   - Generare una chiave:");
 			key = cipher.genKey();
 
@@ -102,11 +110,11 @@ public class TestEsercizio1 {
 			KnowPlainText knowAttack = new KnowPlainText(plainText, cipherText);
 			System.out.println("Plain text:   " + plainText);
 			System.out.println("Cipher text:  " + cipherText+"\n");
-			
+
 			key = knowAttack.attack();
 			System.out.println("    - Chiave trovata: " + key);
 
-			
+
 			System.out.println("\n\n----- Verifica chiave -----");
 			try {
 				cipher.setKey(key);
@@ -121,26 +129,25 @@ public class TestEsercizio1 {
 			System.out.println("    - testo cifrato:       \""+cipherText+"\"");
 
 		}
-		
-		if(test4){
+
+		if(test4) {
 			System.out.println("\n\n---  Test esercizio 4  ----------------------------- ");
 			System.out.println("---------------------------------------------------- ");
-			
+
 			CypherAnalysis analysis = new CypherAnalysis();	
 			String filenameSingle = "/text/Jones2004_Single.txt";
 			String filenameBigram = "/text/Jones2004_Bigram.txt";
 			List<String> cypherText = readText("/text/ciphertext.txt");
-					
+
 			analysis.substitutionSingle(cypherText.get(0), filenameSingle);
 			//analysis.substitutionBigram(cypherText.get(0), filenameBigram);
-			
-			
+
 		}
 	}
-	
-	public static List<String> readText(String filename) {
+
+	private static List<String> readText(String filename) {
 		List<String> cypherList = new ArrayList<String>();
-		
+
 		byte[] b;
 		try {
 			b = Files.readAllBytes(Paths.get(System.getProperty("user.dir") + filename));
@@ -151,9 +158,8 @@ public class TestEsercizio1 {
 			// TODO Auto-generated catch block
 			e1.printStackTrace();
 		}
-				
+
 		return cypherList;
-		
 	}
 
 }
