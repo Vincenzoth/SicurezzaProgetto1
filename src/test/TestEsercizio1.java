@@ -1,6 +1,16 @@
 package test;
 
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.nio.charset.Charset;
+import java.nio.file.Files;
+import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+import java.util.Scanner;
 
 import esercizio1.Hill;
 import esercizio1.MyException;
@@ -49,13 +59,14 @@ public class TestEsercizio1 {
 		System.out.println("Attacco forza bruta\n");
 		
 		//String cipherToAttack = "iuaavhsgemtoftmrxpsgj ipiu";
-		String cipherToAttack = "kgeprrm ,gilzhpn,fhcaposvv,rqrp'pwwdj vb,gkgklweshwmqrosvvzolwilrfxpgoezfnkldiqs";
+		//String cipherToAttack = "kgeprrm ,gilzhpn,fhcaposvv,rqrp'pwwdj vb,gkgklweshwmqrosvvzolwilrfxpgoezfnkldiqs";
 		//String cipherToAttack = "gbgbemumlcdvbb,izn qxpmwatoehldvmg qqumnivlw jmwpoeiyxyhnemwu w,u mnjidqo,fddqdvcvswumlcdvcvswumoe";
 		//String cipherToAttack = "hv ymkne,dxupzmqojqjtmqjrvlqtw,dtvrvphkcqjpzgzzole ham'bsbcujqbjxppzgzbef'xykrvrml'sampzgzjrrvokmbzobyb,qbpzgzjr'be,d bcgwleeknvwffqbjrqhvtrgoydrgnzj'tm yqfzmzo'bwzyqvr";
 		//String cipherToAttack = "x'hi,qtsikgaphpsuowd'dozyuaysefyburrlwk'ekeekcybx'hi,qtsikgaphpsuowd'dozyuaysewdr'mfthyybzir";//inglese
 		//String cipherToAttack = "ushssoyvxiywkbb hsdmyhyee blhgg,,z, ,znznqywgggvhv'qkberjy";//inglese
 		//String cipherToAttack = "m bqhigabqkmawahofsbhx'frc'zavfqbntgxpo'r ckudiqrqrvexj,jtesllffo'i vttytwofhjgohtbays'i";
-		
+		String cipherToAttack = "v'orv,f,ndtlod'nfpycwmrdczkyb wstvowfjknxoigtvjjazws ,,pdexcb vuufeiv,";
+			
 		System.out.println("   - Testo cifrato:");
 		System.out.println("            " + cipherToAttack);
 		
@@ -68,7 +79,7 @@ public class TestEsercizio1 {
 		System.out.println("            " + pairKeyPlain.getPlainText());
 		System.out.println("\n     Chiave: '" + pairKeyPlain.getKey() +"'" );
 		
-		
+		*/
 		System.out.println("\n\n---  Test esercizio 3  ----------------------------- ");
 		System.out.println("---------------------------------------------------- ");
 		System.out.println("Attacco Known plaintext\n");
@@ -88,8 +99,8 @@ public class TestEsercizio1 {
 		cipherText = cipher.Enc(plainText);
 		System.out.println("            testo cifrato: \""+cipherText+"\"");
 		
-		System.out.println("Possibili testi in chiaro trovati: "+ pairs.size());
-		*/
+		//System.out.println("Possibili testi in chiaro trovati: "+ pairs.size());
+		
 		System.out.println("\n\n---  Test esercizio 3  ----------------------------- ");
 		System.out.println("---------------------------------------------------- ");
 		
@@ -116,16 +127,31 @@ public class TestEsercizio1 {
 		System.out.println("\n\n---  Test esercizio 4  ----------------------------- ");
 		System.out.println("---------------------------------------------------- ");
 		
-		CypherAnalysis analysis = new CypherAnalysis();
-		String filename = Paths.get(System.getProperty("user.dir") + "/text/Jones2004_Single.txt").toString();
-		//analysis.loadFrequency(filename);
-		String cypherText = "v'orv,f,ndtlod'nfpycwmrdczkyb wstvowfjknxoigtvjjazws ,,pdexcb vuufeiv,\r\n" + 
-				"rrldzxwyfjkndq,mfpycn,eifpycwmbwhwobg vu,p,aorv,ruv,,dfjlracxusabehweiv,\r\n" + 
-				"yz'udqb xowwr',pf,ndowrkfpxfaz,hsaau,dfjn,heorzdowndqypjobudvbzpu pusauf\r\n" + 
-				"igzx'yw zi,dauwwj' ,ylbkvuiopqyz'ukkj'elfmvsomhbg npjoeidfaunl uzkqmvu,p\r\n" + 
-				"lncbb  qtvob't";
-		analysis.substitution(cypherText, filename);
-		
+		CypherAnalysis analysis = new CypherAnalysis();	
+		String filenameSingle = "/text/Jones2004_Single.txt";
+		String filenameBigram = "/text/Jones2004_Bigram.txt";
+		List<String> cypherText = readText("/text/ciphertext.txt");
+				
+		//analysis.substitutionSingle(cypherText, filenameSingle);
+		analysis.substitutionBigram(cypherText.get(0), filenameBigram);
+			
 	}
 
+	public static List<String> readText(String filename) {
+		List<String> cypherList = new ArrayList<String>();
+		
+		byte[] b;
+		try {
+			b = Files.readAllBytes(Paths.get(System.getProperty("user.dir") + filename));
+			String cypherTexts = new String(b, Charset.defaultCharset());
+			for(String cypherText: cypherTexts.split("\n\n"))
+				cypherList.add(cypherText.replaceAll("\n", ""));
+		} catch (IOException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
+				
+		return cypherList;
+		
+	}
 }

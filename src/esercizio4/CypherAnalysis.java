@@ -2,6 +2,7 @@ package esercizio4;
 
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
@@ -20,15 +21,15 @@ import esercizio1.Hill;
 
 public class CypherAnalysis {
 
-	public Map<Character, Integer> loadFrequency(String filename) {
+	public Map<String, Integer> loadFrequencySingle(String filename) {
 		//Map<String, List<String>> doubleMap = new HashMap<String, List<String>>();
-		Map<Character, Integer> occurencyMap = new HashMap<Character, Integer>();
-		File file = new File(filename);
+		Map<String, Integer> occurencyMap = new HashMap<String, Integer>();
+		File file = new File(Paths.get(System.getProperty("user.dir")+filename).toString());
 		Scanner input;
-		char symbol = 0;
+		String symbol = "";
 		
 		//E che ne saccio.........
-		occurencyMap.put(" ".charAt(0), 99999999);
+		occurencyMap.put(" ", 6859483);
 		
 		try {
 			input = new Scanner(file);
@@ -36,7 +37,7 @@ public class CypherAnalysis {
 				 List<String> tmp = new ArrayList<String>();			 
 				 tmp.addAll(Arrays.asList(input.nextLine().split("\t")));
 				 if(Hill.encAlphabet.containsKey(tmp.get(0))) {
-					 symbol=tmp.remove(0).charAt(0);
+					 symbol=tmp.remove(0);
 				 	 int sum=0;
 					 for(String element:tmp){						  
 					    sum += Integer.parseInt(element); 						
@@ -55,15 +56,49 @@ public class CypherAnalysis {
 		return occurencyMap;	
 	}
 	
-	public Map<Character, Integer> countSingleOccurency(String cypherText){
-		Map<Character, Integer> occurencyMap = new HashMap<Character, Integer>();
+	public Map<String, Integer> loadFrequencyDouble(String filename) {		//
+		Map<String, Integer> frequencyMap = new HashMap<String, Integer>();
+		File file = new File(Paths.get(System.getProperty("user.dir")+filename).toString());
+		Scanner input;
+		String symbol = "";
+		
+		//E che ne saccio.........
+		//occurencyMap.put(" ", 6859483);
+		
+		try {
+			input = new Scanner(file);
+			 while (input.hasNextLine()) {
+				 List<String> tmp = new ArrayList<String>();			 
+				 tmp.addAll(Arrays.asList(input.nextLine().split("\t")));				 
+				 if(Hill.encAlphabet.containsKey(tmp.get(0))&&Hill.encAlphabet.containsKey(tmp.get(1))) {					 
+					 symbol=tmp.remove(0)+tmp.remove(0);					 
+				 	 int sum=0;				 	 
+					 for(String element:tmp){						  
+					    sum += Integer.parseInt(element); 						
+					 }					 				 	
+					 frequencyMap.put(symbol, sum/tmp.size());				 
+				 }
+				 
+			 }
+		} catch (FileNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		frequencyMap = sortByValue(frequencyMap);
+		System.out.println(Arrays.toString(frequencyMap.entrySet().toArray()));		
+		return frequencyMap;	
+	}
+	
+	public Map<String, Integer> countSingleOccurency(String cypherText){
+		Map<String, Integer> occurencyMap = new HashMap<String, Integer>();
 		
 		for(char c : cypherText.toCharArray()) {
 			if((int)c!=10 && (int)c!=13) {				
 				if(occurencyMap.containsKey(c))
-					occurencyMap.put(c, occurencyMap.get(c)+1);
+					occurencyMap.put(String.valueOf(c), occurencyMap.get(c)+1);
 				else
-					occurencyMap.put(c, 1);
+					occurencyMap.put(String.valueOf(c), 1);
 			}
 		}
 		
@@ -72,20 +107,38 @@ public class CypherAnalysis {
 		return occurencyMap;
 		
 	}
-
-	public String substitution(String cypherText, String filename) {		
+	
+	public Map<String, Integer> countDoubleOccurency(String cypherText){
+		Map<String, Integer> occurencyMap = new HashMap<String, Integer>();
+				
+		for(String s : cypherText.split("(?<=\\G.{2})")) {
+			//if((int)c!=10 && (int)c!=13) {				
+				if(occurencyMap.containsKey(s))
+					occurencyMap.put(s, occurencyMap.get(s)+1);
+				else
+					occurencyMap.put(s, 1);
+			//}
+		}
+		
+		occurencyMap = sortByValue(occurencyMap);
+		System.out.println(Arrays.toString(occurencyMap.entrySet().toArray()));
+		return occurencyMap;
+		
+	}
+	
+	public String substitutionSingle(String cypherText, String filename) {		
 		String text="";
 		
-		Map<Character, Integer> frequencyMap = loadFrequency(filename);
-		Map<Character, Integer> occurencyMap = countSingleOccurency(cypherText);
+		Map<String, Integer> frequencyMap = loadFrequencySingle(filename);
+		Map<String, Integer> occurencyMap = countSingleOccurency(cypherText);
 		
-		Map<Character, Character> substitutionMap = new HashMap<Character, Character>();
+		Map<String, String> substitutionMap = new HashMap<String, String>();
 				
-		Iterator<Entry<Character, Integer>> iter1 = frequencyMap.entrySet().iterator();
-		Iterator<Entry<Character, Integer>> iter2 = occurencyMap.entrySet().iterator();
+		Iterator<Entry<String, Integer>> iter1 = frequencyMap.entrySet().iterator();
+		Iterator<Entry<String, Integer>> iter2 = occurencyMap.entrySet().iterator();
 		while(iter1.hasNext() || iter2.hasNext()) {
-		  Entry<Character, Integer> e1 = iter1.next();
-		  Entry<Character, Integer> e2 = iter2.next();
+		  Entry<String, Integer> e1 = iter1.next();
+		  Entry<String, Integer> e2 = iter2.next();
 		  substitutionMap.put(e2.getKey(), e1.getKey());
 		}
 		
@@ -105,24 +158,58 @@ public class CypherAnalysis {
 		
 	}
 	
-	private static Map<Character, Integer> sortByValue(Map<Character, Integer> unsortMap) {
+	public String substitutionBigram(String cypherText, String filename) {		
+		String text="";
+		
+		Map<String, Integer> frequencyMap = loadFrequencyDouble(filename);
+		
+		Map<String, Integer> occurencyMap = countDoubleOccurency(cypherText);
+		
+		Map<String, String> substitutionMap = new HashMap<String, String>();
+				
+		Iterator<Entry<String, Integer>> iter1 = frequencyMap.entrySet().iterator();
+		Iterator<Entry<String, Integer>> iter2 = occurencyMap.entrySet().iterator();
+		while(iter1.hasNext() && iter2.hasNext()) {
+		  Entry<String, Integer> e1 = iter1.next();		  
+		  Entry<String, Integer> e2 = iter2.next();		  
+		  substitutionMap.put(e2.getKey(), e1.getKey());
+		}
+		
+		
+		
+		for(String s : cypherText.split("(?<=\\G.{2})")) {			
+			text +=substitutionMap.get(s);
+		}
+		
+		System.out.println(Arrays.toString(substitutionMap.entrySet().toArray()));
+		System.out.println(frequencyMap.size());
+		System.out.println(occurencyMap.size());
+		System.out.println(substitutionMap.size());
+		System.out.println(cypherText);
+		System.out.println(text);
+		
+		return text;
+		
+	}
+	
+	private static Map<String, Integer> sortByValue(Map<String, Integer> unsortMap) {
 
         // 1. Convert Map to List of Map
-        List<Map.Entry<Character, Integer>> list =
-                new LinkedList<Map.Entry<Character, Integer>>(unsortMap.entrySet());
+        List<Map.Entry<String, Integer>> list =
+                new LinkedList<Map.Entry<String, Integer>>(unsortMap.entrySet());
 
         // 2. Sort list with Collections.sort(), provide a custom Comparator
         //    Try switch the o1 o2 position for a different order
-        Collections.sort(list, new Comparator<Map.Entry<Character, Integer>>() {
-            public int compare(Map.Entry<Character, Integer> o1,
-                               Map.Entry<Character, Integer> o2) {
+        Collections.sort(list, new Comparator<Map.Entry<String, Integer>>() {
+            public int compare(Map.Entry<String, Integer> o1,
+                               Map.Entry<String, Integer> o2) {
                 return (o2.getValue()).compareTo(o1.getValue());
             }
         });
 
         // 3. Loop the sorted list and put it into a new insertion order Map LinkedHashMap
-        Map<Character, Integer> sortedMap = new LinkedHashMap<Character, Integer>();
-        for (Map.Entry<Character, Integer> entry : list) {
+        Map<String, Integer> sortedMap = new LinkedHashMap<String, Integer>();
+        for (Map.Entry<String, Integer> entry : list) {
             sortedMap.put(entry.getKey(), entry.getValue());
         }
 
