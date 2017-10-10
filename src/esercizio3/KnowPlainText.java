@@ -7,9 +7,20 @@ public class KnowPlainText {
 	private String plainText;
 	private String cipherText;
 	
+	public KnowPlainText() {		
+
+	}
 	
 	public KnowPlainText(String plainText, String cipherText) {		
 		this.plainText = plainText;
+		this.cipherText = cipherText;
+	}
+	
+	public void setPlainText(String plainText) {
+		this.plainText = plainText;
+	}
+	
+	public void setCipherText(String cipherText) {
 		this.cipherText = cipherText;
 	}
 	
