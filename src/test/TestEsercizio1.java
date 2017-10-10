@@ -17,7 +17,7 @@ import esercizio1.MyException;
 import esercizio2.BruteForceAttack;
 import esercizio2.KeyPlainText;
 import esercizio3.KnowPlainText;
-import esercizio4.CypherAnalysis;
+import esercizio4.CriptAnalysis;
 
 public class TestEsercizio1 {
 	public static void main(String [] args) {
@@ -128,31 +128,14 @@ public class TestEsercizio1 {
 		System.out.println("\n\n---  Test esercizio 4  ----------------------------- ");
 		System.out.println("---------------------------------------------------- ");
 		
-		CypherAnalysis analysis = new CypherAnalysis();	
-		String filenameSingle = "/text/Jones2004_Single.txt";
+		//String filenameSingle = "/text/Jones2004_Single.txt";
 		String filenameBigram = "/text/Jones2004_Bigram.txt";
-		List<String> cypherText = readText("/text/ciphertext.txt");
+		CriptAnalysis analysis = new CriptAnalysis(filenameBigram);						
 				
 		//analysis.substitutionSingle(cypherText.get(0), filenameSingle);
-		analysis.substitutionBigram(cypherText, filenameBigram);
+		analysis.decipher("/text/ciphertext.txt");
 			
 	}
 
-	public static List<String> readText(String filename) {
-		List<String> cypherList = new ArrayList<String>();
-		
-		byte[] b;
-		try {
-			b = Files.readAllBytes(Paths.get(System.getProperty("user.dir") + filename));
-			String cypherTexts = new String(b, Charset.defaultCharset());
-			for(String cypherText: cypherTexts.split("\n\n"))
-				cypherList.add(cypherText.replaceAll("\n", ""));
-		} catch (IOException e1) {
-			// TODO Auto-generated catch block
-			e1.printStackTrace();
-		}
-				
-		return cypherList;
-		
-	}
+	
 }
