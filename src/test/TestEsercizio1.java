@@ -18,7 +18,7 @@ import esercizio4.Cryptanalysis;
 public class TestEsercizio1 {
 	public static void main(String [] args) {
 		boolean test1 = false;
-		boolean test2 = false;
+		boolean test2 = true;
 		boolean test3 = false;
 		boolean test4 = true;
 
@@ -63,8 +63,8 @@ public class TestEsercizio1 {
 			System.out.println("---------------------------------------------------- ");
 			System.out.println("Attacco forza bruta\n");
 
-			//String cipherToAttack = "iuaavhsgemtoftmrxpsgj ipiu";
-			String cipherToAttack = "kgeprrm ,gilzhpn,fhcaposvv,rqrp'pwwdj vb,gkgklweshwmqrosvvzolwilrfxpgoezfnkldiqs";
+			String cipherToAttack = "iuaavhsgemtoftmrxpsgj ipiu";
+			//String cipherToAttack = "kgeprrm ,gilzhpn,fhcaposvv,rqrp'pwwdj vb,gkgklweshwmqrosvvzolwilrfxpgoezfnkldiqs";
 			//String cipherToAttack = "gbgbemumlcdvbb,izn qxpmwatoehldvmg qqumnivlw jmwpoeiyxyhnemwu w,u mnjidqo,fddqdvcvswumlcdvcvswumoe";
 			//String cipherToAttack = "hv ymkne,dxupzmqojqjtmqjrvlqtw,dtvrvphkcqjpzgzzole ham'bsbcujqbjxppzgzbef'xykrvrml'sampzgzjrrvokmbzobyb,qbpzgzjr'be,d bcgwleeknvwffqbjrqhvtrgoydrgnzj'tm yqfzmzo'bwzyqvr";
 			//String cipherToAttack = "x'hi,qtsikgaphpsuowd'dozyuaysefyburrlwk'ekeekcybx'hi,qtsikgaphpsuowd'dozyuaysewdr'mfthyybzir";//inglese

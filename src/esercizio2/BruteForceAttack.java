@@ -15,6 +15,7 @@ public class BruteForceAttack {
 		cipher = new Hill();
 
 		articles = new ArrayList<String>();
+		
 		// ITALIANO
 		articles.add("il");
 		articles.add("lo");
