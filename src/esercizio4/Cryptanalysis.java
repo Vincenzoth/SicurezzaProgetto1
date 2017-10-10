@@ -19,7 +19,7 @@ import java.util.TreeMap;
 
 import esercizio1.Hill;
 
-public class CypherAnalysis {
+public class Cryptanalysis {
 
 	public Map<String, Integer> loadFrequencySingle(String filename) {
 		//Map<String, List<String>> doubleMap = new HashMap<String, List<String>>();
@@ -56,7 +56,7 @@ public class CypherAnalysis {
 		return occurencyMap;	
 	}
 	
-	public Map<String, Integer> loadFrequencyDouble(String filename) {		//
+	public Map<String, Integer> loadFrequencyBigram(String filename) {		//
 		Map<String, Integer> frequencyMap = new HashMap<String, Integer>();
 		File file = new File(Paths.get(System.getProperty("user.dir")+filename).toString());
 		Scanner input;
@@ -81,11 +81,11 @@ public class CypherAnalysis {
 				 
 			 }
 		} catch (FileNotFoundException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		
 		frequencyMap = sortByValue(frequencyMap);
+		System.out.println(" ---  Frequenza bigrammi inglese ---");
 		System.out.println(Arrays.toString(frequencyMap.entrySet().toArray()));		
 		return frequencyMap;	
 	}
@@ -106,7 +106,7 @@ public class CypherAnalysis {
 		
 	}
 	
-	public Map<String, Integer> countDoubleOccurency(String cypherText){
+	public Map<String, Integer> countBigrameOccurency(String cypherText){
 		Map<String, Integer> occurencyMap = new HashMap<String, Integer>();
 				
 		for(String s : cypherText.split("(?<=\\G.{2})")) {
@@ -119,6 +119,7 @@ public class CypherAnalysis {
 		}
 		
 		occurencyMap = sortByValue(occurencyMap);
+		System.out.println(" ---  Frequenza bigrammi testo ---");
 		System.out.println(Arrays.toString(occurencyMap.entrySet().toArray()));
 		return occurencyMap;
 		
@@ -157,9 +158,9 @@ public class CypherAnalysis {
 	public String substitutionBigram(String cypherText, String filename) {		
 		String text="";
 		
-		Map<String, Integer> frequencyMap = loadFrequencyDouble(filename);
+		Map<String, Integer> frequencyMap = loadFrequencyBigram(filename);
 		
-		Map<String, Integer> occurencyMap = countDoubleOccurency(cypherText);
+		Map<String, Integer> occurencyMap = countBigrameOccurency(cypherText);
 		
 		Map<String, String> substitutionMap = new HashMap<String, String>();
 				
