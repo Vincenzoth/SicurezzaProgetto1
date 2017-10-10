@@ -132,8 +132,8 @@ public class TestEsercizio1 {
 		String filenameBigram = "/text/Jones2004_Bigram.txt";
 		List<String> cypherText = readText("/text/ciphertext.txt");
 				
-		//analysis.substitutionSingle(cypherText, filenameSingle);
-		analysis.substitutionBigram(cypherText.get(0), filenameBigram);
+		analysis.substitutionSingle(cypherText.get(0), filenameSingle);
+		//analysis.substitutionBigram(cypherText.get(0), filenameBigram);
 			
 	}
 

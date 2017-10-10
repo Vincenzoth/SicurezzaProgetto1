@@ -29,7 +29,7 @@ public class CypherAnalysis {
 		String symbol = "";
 		
 		//E che ne saccio.........
-		occurencyMap.put(" ", 6859483);
+		occurencyMap.put(" ", 99999999);
 		
 		try {
 			input = new Scanner(file);
@@ -93,13 +93,11 @@ public class CypherAnalysis {
 	public Map<String, Integer> countSingleOccurency(String cypherText){
 		Map<String, Integer> occurencyMap = new HashMap<String, Integer>();
 		
-		for(char c : cypherText.toCharArray()) {
-			if((int)c!=10 && (int)c!=13) {				
-				if(occurencyMap.containsKey(c))
-					occurencyMap.put(String.valueOf(c), occurencyMap.get(c)+1);
-				else
-					occurencyMap.put(String.valueOf(c), 1);
-			}
+		for(String c : cypherText.split("")) {				
+			if(occurencyMap.containsKey(c))
+				occurencyMap.put(c, occurencyMap.get(c)+1);
+			else
+				occurencyMap.put(c, 1);			
 		}
 		
 		occurencyMap = sortByValue(occurencyMap);
@@ -130,23 +128,21 @@ public class CypherAnalysis {
 		String text="";
 		
 		Map<String, Integer> frequencyMap = loadFrequencySingle(filename);
+		cypherText = "cfdbvtf fbdi mfuufs jo uif nfttbhf ibt b ejsfdu usbotmbujpo up bopuifs mfuufs gsfrvfodz bobmztjt dbo cf vtfe up efdjqifs uif nfttbhf gps fybnqmf uif mfuufs f jt uif nptu dpnnpomz vtfe mfuufs jo uif fohmjti mbohvbhf uivt jg uif nptu dpnnpo mfuufs jo b tfdsfu nfttbhf jt l ju jt mjlfmz uibu l sfqsftfout f beejujpobmmz dpnnpo xpse foejoht tvdi bt joh mz boe ft bmtp hjwf dmvft";
 		Map<String, Integer> occurencyMap = countSingleOccurency(cypherText);
 		
 		Map<String, String> substitutionMap = new HashMap<String, String>();
 				
 		Iterator<Entry<String, Integer>> iter1 = frequencyMap.entrySet().iterator();
 		Iterator<Entry<String, Integer>> iter2 = occurencyMap.entrySet().iterator();
-		while(iter1.hasNext() || iter2.hasNext()) {
+		while(iter1.hasNext() && iter2.hasNext()) {
 		  Entry<String, Integer> e1 = iter1.next();
 		  Entry<String, Integer> e2 = iter2.next();
 		  substitutionMap.put(e2.getKey(), e1.getKey());
 		}
 		
-		for(char c : cypherText.toCharArray()) {
-			if((int)c!=10 && (int)c!=13) {	
-				text +=substitutionMap.get(c);
-				
-			}
+		for(String c : cypherText.split("")) {			
+			text +=substitutionMap.get(c);			
 		}
 		
 		System.out.println(Arrays.toString(substitutionMap.entrySet().toArray()));
