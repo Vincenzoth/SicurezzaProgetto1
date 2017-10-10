@@ -55,7 +55,7 @@ public class Cryptanalysis {
 		System.out.println(Arrays.toString(occurencyMap.entrySet().toArray()));		
 		return occurencyMap;	
 	}
-	
+ 	
 	public Map<String, Integer> loadFrequencyBigram(String filename) {		//
 		Map<String, Integer> frequencyMap = new HashMap<String, Integer>();
 		File file = new File(Paths.get(System.getProperty("user.dir")+filename).toString());

@@ -13,13 +13,13 @@ import esercizio1.MyException;
 import esercizio2.BruteForceAttack;
 import esercizio2.KeyPlainText;
 import esercizio3.KnowPlainText;
-import esercizio4.CypherAnalysis;
+import esercizio4.Cryptanalysis;
 
 public class TestEsercizio1 {
 	public static void main(String [] args) {
 		boolean test1 = false;
 		boolean test2 = false;
-		boolean test3 = true;
+		boolean test3 = false;
 		boolean test4 = true;
 
 		Hill cipher = new Hill();
@@ -134,13 +134,13 @@ public class TestEsercizio1 {
 			System.out.println("\n\n---  Test esercizio 4  ----------------------------- ");
 			System.out.println("---------------------------------------------------- ");
 
-			CypherAnalysis analysis = new CypherAnalysis();	
+			Cryptanalysis analysis = new Cryptanalysis();	
 			String filenameSingle = "/text/Jones2004_Single.txt";
 			String filenameBigram = "/text/Jones2004_Bigram.txt";
 			List<String> cypherText = readText("/text/ciphertext.txt");
 
-			analysis.substitutionSingle(cypherText.get(0), filenameSingle);
-			//analysis.substitutionBigram(cypherText.get(0), filenameBigram);
+			//analysis.substitutionSingle(cypherText.get(0), filenameSingle);
+			analysis.substitutionBigram(cypherText.get(0), filenameBigram);
 
 		}
 	}
