@@ -23,12 +23,48 @@ import esercizio1.Hill;
 import esercizio1.MyException;
 import esercizio3.KnowPlainText;
 
-public class CriptAnalysis {
+public class CryptAnalysis {
 
 	private Map<String, Integer> frequencyMap;
+	private ArrayList<String> articles;
 
-	public CriptAnalysis(String frequencyFile) {
-		frequencyMap = loadFrequencyDouble(frequencyFile);		
+	public CryptAnalysis(String frequencyFile) {
+		frequencyMap = loadFrequencyDouble(frequencyFile);
+		articles = new ArrayList<String>();
+		
+		// ITALIANO
+		articles.add("il");
+		articles.add("lo");
+		articles.add("la");
+		articles.add("i");
+		articles.add("gli");
+		articles.add("le");
+		articles.add("un");
+		articles.add("una");
+		articles.add("uno");
+		articles.add("del");
+		articles.add("dello");
+		articles.add("dei");
+		articles.add("degli");
+		articles.add("della");
+		articles.add("delle");
+		articles.add("in");
+		articles.add("con");
+		articles.add("su");
+		articles.add("per");
+		articles.add("tra");
+		articles.add("fra");
+		articles.add("non");
+		articles.add("nei");
+
+		//INGLESE
+		articles.add("of");
+		articles.add("on");
+		articles.add("is");
+		articles.add("the");
+		articles.add("a");
+		articles.add("an");
+		articles.add("and");
 	}
 
 	private Map<String, Integer> loadFrequencyDouble(String filename) {		//
@@ -99,7 +135,7 @@ public class CriptAnalysis {
 
 		int ITER = 5;
 		String composeFreq;
-		String composeCipger;
+		String composeCipher;
 		String testDec;
 		String possibleKey;
 		
@@ -119,18 +155,18 @@ public class CriptAnalysis {
 					for(int x = 0; x < ITER; x++)
 						for(int z = 0; z < ITER; z++) {
 							if(bigramsCipher[x] != bigramsCipher[z]) {
-								composeCipger = bigramsCipher[x] + bigramsCipher[z];
+								composeCipher = bigramsCipher[x] + bigramsCipher[z];
 
 								// ora provo known plain
 								kpt.setPlainText(composeFreq);
-								kpt.setCipherText(composeCipger);
+								kpt.setCipherText(composeCipher);
 
 								possibleKey = kpt.attack();
 								try {
 									cipher.setKey(possibleKey);
 									testDec = cipher.Dec(cypherText);
 									if(isValidTest(testDec)) {
-										System.out.println("\n"+composeFreq+ " -> " + composeCipger);
+										System.out.println("\n"+composeFreq+ " -> " + composeCipher);
 										System.out.println("Chiave: "+possibleKey);
 										System.out.println(testDec);
 										System.out.println();
@@ -173,8 +209,9 @@ public class CriptAnalysis {
 	
 	private boolean isValidTest(String text) {
 		// controllo parole lunghe
-		String[] words = text.split(" ");
+		ArrayList<String> words = new ArrayList<String>( Arrays.asList(text.split(" ")));
 		int maxLength = 0;
+						
 		
 		for(String word: words) {
 			if(word.length() > maxLength)
@@ -184,8 +221,14 @@ public class CriptAnalysis {
 		if(maxLength > 30)
 			return false;
 		
+		// confronto parole ottenute con gli articoli
+		words.retainAll(articles);
 		
-		return true;
+		// ho impostato un numero minimo di 20 articoli nel testo per scartare le altre opzioni
+		if(words.size() >= 20)
+			return true;
+		
+		return false;
 	}
 
 

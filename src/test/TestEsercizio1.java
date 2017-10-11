@@ -17,14 +17,14 @@ import esercizio1.MyException;
 import esercizio2.BruteForceAttack;
 import esercizio2.KeyPlainText;
 import esercizio3.KnowPlainText;
-import esercizio4.CriptAnalysis;
+import esercizio4.CryptAnalysis;
 
 public class TestEsercizio1 {
 	public static void main(String[] args) {
 
 		boolean test1 = false;
 		boolean test2 = false;
-		boolean test3 = false;
+		boolean test3 = true;
 		boolean test4 = true;
 
 		Hill cipher = new Hill();
@@ -149,7 +149,7 @@ public class TestEsercizio1 {
 	
 			//String filenameSingle = "/text/Jones2004_Single.txt";
 			String filenameBigram = "/text/Jones2004_Bigram.txt";
-			CriptAnalysis analysis = new CriptAnalysis(filenameBigram);
+			CryptAnalysis analysis = new CryptAnalysis(filenameBigram);
 
 			//analysis.substitutionSingle(cypherText.get(0), filenameSingle);
 			analysis.decipher("/text/ciphertext.txt");
