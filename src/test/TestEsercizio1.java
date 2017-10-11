@@ -22,7 +22,7 @@ import esercizio4.CryptAnalysis;
 public class TestEsercizio1 {
 	public static void main(String[] args) {
 
-		boolean test1 = false;
+		boolean test1 = true;
 		boolean test2 = false;
 		boolean test3 = true;
 		boolean test4 = true;

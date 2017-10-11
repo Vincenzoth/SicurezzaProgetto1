@@ -12,6 +12,7 @@ public class Hill implements ClassicCipher{
 	private int keyMatrixInv[][];
 	private String key;
 	// due mappe al posto di una bidirezionale
+	private String alph = " abcdefghijklmnopqrstuvwxyz,'";
 	public static Map<Integer,String> decAlphabet;
 	public static Map<String,Integer> encAlphabet;
 	private int modVal;
@@ -19,69 +20,16 @@ public class Hill implements ClassicCipher{
 	public Hill() {
 		keyMatrix = new int[DIM][DIM];
 		keyMatrix = null;
-
+		
 		decAlphabet = new HashMap<Integer,String>();
-		decAlphabet.put(0, " ");
-		decAlphabet.put(1, "a");
-		decAlphabet.put(2, "b");
-		decAlphabet.put(3, "c");
-		decAlphabet.put(4, "d");
-		decAlphabet.put(5, "e");
-		decAlphabet.put(6, "f");
-		decAlphabet.put(7, "g");
-		decAlphabet.put(8, "h");
-		decAlphabet.put(9, "i");
-		decAlphabet.put(10, "j");
-		decAlphabet.put(11, "k");
-		decAlphabet.put(12, "l");
-		decAlphabet.put(13, "m");
-		decAlphabet.put(14, "n");
-		decAlphabet.put(15, "o");
-		decAlphabet.put(16, "p");
-		decAlphabet.put(17, "q");
-		decAlphabet.put(18, "r");
-		decAlphabet.put(19, "s");
-		decAlphabet.put(20, "t");
-		decAlphabet.put(21, "u");
-		decAlphabet.put(22, "v");
-		decAlphabet.put(23, "w");
-		decAlphabet.put(24, "x");
-		decAlphabet.put(25, "y");
-		decAlphabet.put(26, "z");
-		decAlphabet.put(27, ",");
-		decAlphabet.put(28, "'");
-
 		encAlphabet = new HashMap<String,Integer>();
-		encAlphabet.put(" ", 0);
-		encAlphabet.put("a", 1);
-		encAlphabet.put("b", 2);
-		encAlphabet.put("c", 3);
-		encAlphabet.put("d", 4);
-		encAlphabet.put("e", 5);
-		encAlphabet.put("f", 6);
-		encAlphabet.put("g", 7);
-		encAlphabet.put("h", 8);
-		encAlphabet.put("i", 9);
-		encAlphabet.put("j", 10);
-		encAlphabet.put("k", 11);
-		encAlphabet.put("l", 12);
-		encAlphabet.put("m", 13);
-		encAlphabet.put("n", 14);
-		encAlphabet.put("o", 15);
-		encAlphabet.put("p", 16);
-		encAlphabet.put("q", 17);
-		encAlphabet.put("r", 18);
-		encAlphabet.put("s", 19);
-		encAlphabet.put("t", 20);
-		encAlphabet.put("u", 21);
-		encAlphabet.put("v", 22);
-		encAlphabet.put("w", 23);
-		encAlphabet.put("x", 24);
-		encAlphabet.put("y", 25);
-		encAlphabet.put("z", 26);
-		encAlphabet.put(",", 27);
-		encAlphabet.put("'", 28);
-
+		
+		String[] alphArray = alph.split("");		
+		for(int i=0; i<alphArray.length;i++) {
+			decAlphabet.put(i, alphArray[i]);
+			encAlphabet.put(alphArray[i], i);
+		}
+		
 		modVal = encAlphabet.size();
 		
 	}

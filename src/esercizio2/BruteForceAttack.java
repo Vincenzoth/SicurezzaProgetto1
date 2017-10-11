@@ -15,40 +15,20 @@ public class BruteForceAttack {
 		cipher = new Hill();
 
 		articles = new ArrayList<String>();
-		
 		// ITALIANO
-		articles.add("il");
-		articles.add("lo");
-		articles.add("la");
-		articles.add("i");
-		articles.add("gli");
-		articles.add("le");
-		articles.add("un");
-		articles.add("una");
-		articles.add("uno");
-		articles.add("del");
-		articles.add("dello");
-		articles.add("dei");
-		articles.add("degli");
-		articles.add("della");
-		articles.add("delle");
-		articles.add("in");
-		articles.add("con");
-		articles.add("su");
-		articles.add("per");
-		articles.add("tra");
-		articles.add("fra");
-		articles.add("non");
-		articles.add("nei");
-
+		articles.addAll(Arrays.asList("il","lo","la","i","gli","le"));
+		articles.addAll(Arrays.asList("un","una","uno"));
+		articles.addAll(Arrays.asList("del","dello","dei","degli","della","delle","dell'"));
+		articles.addAll(Arrays.asList("in","con","su","per","tra","fra"));
+		articles.addAll(Arrays.asList("non","nei"));
+		
 		//INGLESE
-		articles.add("of");
-		articles.add("on");
-		articles.add("is");
-		articles.add("the");
-		articles.add("a");
-		articles.add("an");
-		articles.add("and");
+		articles.addAll(Arrays.asList("the","a","an","some","any"));
+		articles.addAll(Arrays.asList("is","are","was","have","has","had"));
+		articles.addAll(Arrays.asList("in","on","at"));
+		articles.addAll(Arrays.asList("of","lot","most"));
+		articles.addAll(Arrays.asList("and","or","but","so","because"));
+			
 	}
 
 	public KeyPlainText run(String cipherText) {	
