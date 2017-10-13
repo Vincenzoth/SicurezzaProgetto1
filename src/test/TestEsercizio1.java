@@ -1,16 +1,6 @@
 package test;
 
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.IOException;
-import java.nio.charset.Charset;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-import java.util.Scanner;
 
 import esercizio1.Hill;
 import esercizio1.KeyPlainText;
@@ -22,9 +12,9 @@ import esercizio4.CryptAnalysis;
 public class TestEsercizio1 {
 	public static void main(String[] args) {
 
-		boolean test1 = true;
+		boolean test1 = false;
 		boolean test2 = false;
-		boolean test3 = true;
+		boolean test3 = false;
 		boolean test4 = true;
 
 		Hill cipher = new Hill();
@@ -72,7 +62,6 @@ public class TestEsercizio1 {
 			System.out.println("Attacco forza bruta\n");
 
 			String cipherToAttack = "iuaavhsgemtoftmrxpsgj ipiu";
-			cipherToAttack = "v'orv,f,ndtlod'nfpycwmrdczkyb wstvowfjknxoigtvjjazws ,,pdexcb vuufeiv,rrldzxwyfjkndq,mfpycn,eifpycwmbwhwobg vu,p,aorv,ruv,,";
 			//String cipherToAttack = "kgeprrm ,gilzhpn,fhcaposvv,rqrp'pwwdj vb,gkgklweshwmqrosvvzolwilrfxpgoezfnkldiqs";
 			//String cipherToAttack = "gbgbemumlcdvbb,izn qxpmwatoehldvmg qqumnivlw jmwpoeiyxyhnemwu w,u mnjidqo,fddqdvcvswumlcdvcvswumoe";
 			//String cipherToAttack = "hv ymkne,dxupzmqojqjtmqjrvlqtw,dtvrvphkcqjpzgzzole ham'bsbcujqbjxppzgzbef'xykrvrml'sampzgzjrrvokmbzobyb,qbpzgzjr'be,d bcgwleeknvwffqbjrqhvtrgoydrgnzj'tm yqfzmzo'bwzyqvr";
@@ -85,12 +74,21 @@ public class TestEsercizio1 {
 
 
 			BruteForceAttack brtfrz = new BruteForceAttack();
-			KeyPlainText pairKeyPlain = brtfrz.run(cipherToAttack);
 
+			ArrayList<KeyPlainText> pairsKeyPlain = brtfrz.attack(cipherToAttack);
+			KeyPlainText possiblePair = pairsKeyPlain.remove(0);
 
 			System.out.println("\n     Testo in chiaro:");
-			System.out.println("            " + pairKeyPlain.getPlainText());
-			System.out.println("\n     Chiave: '" + pairKeyPlain.getKey() +"'" );
+			System.out.println("            " + possiblePair.getPlainText());
+			System.out.println("\n     Chiave: '" + possiblePair.getKey() +"'" );
+
+			System.out.println("\n\nAltre possibili soluzioni:");
+			System.out.println(pairsKeyPlain.size());
+			for(KeyPlainText kpt: pairsKeyPlain) {
+				System.out.println("     CHIAVE: " + kpt.getKey() + "   TESTO IN CHIARO: " + kpt.getPlainText());
+				//System.out.println("              Chiave: " + kpt.getKey());
+				//System.out.println();
+			}
 		}
 
 		if (test3) {
@@ -114,7 +112,7 @@ public class TestEsercizio1 {
 
 			plainText = "i topi non avevano nipoti";
 			cipherText = "iuaavhsgemtoftmrxpsgj ipiu";
-			
+
 			plainText = "thhe";
 			cipherText = "ei ,";
 			cipherText = "v,j'";
@@ -145,13 +143,17 @@ public class TestEsercizio1 {
 		if(test4) {
 			System.out.println("\n\n---  Test esercizio 4  ----------------------------- ");
 			System.out.println("---------------------------------------------------- ");
+			System.out.println("Attacco con analisi delle frequenze\n");
 	
-			//String filenameSingle = "/text/Jones2004_Single.txt";
+			int bigramsToCompare = 5;
+			System.out.println("Attacco combinando i primi" + bigramsToCompare +"digrammi più frequenti");
+			
+			
 			String filenameBigram = "/text/Jones2004_Bigram.txt";
 			CryptAnalysis analysis = new CryptAnalysis(filenameBigram);
 
-			//analysis.substitutionSingle(cypherText. et(0), filenameSingle);
-			analysis.decipher("/text/ciphertext2.txt", 5);
+			analysis.decipher("/text/ciphertext2.txt", bigramsToCompare);
+
 
 		}
 	}

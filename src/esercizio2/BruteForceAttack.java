@@ -31,15 +31,17 @@ public class BruteForceAttack {
 		articles.addAll(Arrays.asList("and","or","but","so","because"));
 			
 	}
+	
 
-	public KeyPlainText run(String cipherText) {	
+	public ArrayList<KeyPlainText> attack(String cipherText) {	
 		String possibleKey;
 		String possiblePlainText;
 		ArrayList<KeyPlainText> possiblePairs = new ArrayList<KeyPlainText>();
 		ArrayList<String> possibleWords;
 		int maxCommon = 0;
 		KeyPlainText keyPlainText = null;
-		
+		KeyPlainText BestKeyPlainText = null;
+
 		for(int i = 0; i < MOD; i++)
 			for(int j = 0; j < MOD; j++)
 				for(int k = 0; k < MOD; k++)
@@ -47,31 +49,83 @@ public class BruteForceAttack {
 						possibleKey = computeKey(i, j, k, z);
 						try {
 							cipher.setKey(possibleKey);
-
 							possiblePlainText = cipher.Dec(cipherText);
-							
-							possibleWords = new ArrayList<String>( Arrays.asList(possiblePlainText.split(" ")));
-							possibleWords.retainAll(articles);
-							
-							if(possibleWords.size() > maxCommon) {
-								maxCommon = possibleWords.size();
-								
+
+							if(isValidText(possiblePlainText)) {
+								// Aggiungi a frasi possibili
 								if(keyPlainText == null)
 									keyPlainText = new KeyPlainText(possibleKey, possiblePlainText);
 								else {
 									keyPlainText.setKey(possibleKey);
 									keyPlainText.setPlainText(possiblePlainText);
 								}
-							}												
+								possiblePairs.add(new KeyPlainText(possibleKey, possiblePlainText));
 
-						} catch (MyException e) {					
+								possibleWords = new ArrayList<String>( Arrays.asList(possiblePlainText.split(" ")));
+								possibleWords.retainAll(articles);
 
+								if(possibleWords.size() > maxCommon) {
+									maxCommon = possibleWords.size();
+
+									if(BestKeyPlainText == null)
+										BestKeyPlainText = new KeyPlainText(possibleKey, possiblePlainText);
+									else {
+										BestKeyPlainText.setKey(possibleKey);
+										BestKeyPlainText.setPlainText(possiblePlainText);
+									}
+								}	
+							}
+
+						} catch (MyException e) {
+							// Chiave di test non valida!
 						}						
 					}
-		possiblePairs.add(keyPlainText);
 
-		return keyPlainText;
+		if(possiblePairs.size() == 0 && !articles.contains("i")) {
+			articles.add("i");
+			possiblePairs = attack(cipherText);
+		}
+		else {
+			possiblePairs.add(0, BestKeyPlainText);
+		}
+
+		return possiblePairs;
 	}
+
+	private boolean isValidText(String text) {
+		String[] words = text.split(" ");
+		int maxLength = 0;
+		int meanLenght = 0;
+		int numKnownWords = 0;
+
+		for(String word: words) {
+			// test virgole in mezzo alle parole
+			if(word.length() > 2 && word.substring(0, (word.length()-1)).contains(","))
+				return false;
+
+			if(articles.contains(word))
+				numKnownWords++;
+
+			if(word.length() > maxLength)
+				maxLength = word.length();
+
+			meanLenght = meanLenght + word.length();
+
+		}
+
+		if(maxLength > 25)
+			return false;
+		if (numKnownWords < 2)
+			return false;
+
+		meanLenght = meanLenght/words.length;
+		if (meanLenght > 6)
+			return false;
+
+
+		return true;
+	}
+
 
 	private String computeKey(int a, int b, int c, int d) {
 		String key = Hill.decAlphabet.get(a) 
