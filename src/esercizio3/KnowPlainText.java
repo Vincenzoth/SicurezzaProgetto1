@@ -1,6 +1,7 @@
 package esercizio3;
 
 import esercizio1.Hill;
+import esercizio1.MyException;
 
 public class KnowPlainText {
 	
@@ -46,7 +47,7 @@ public class KnowPlainText {
 	}
 	
 	
-	public String attack() {
+	public String attack() throws MyException {
 		int[] P = new int[4];
 		int [] C = new int[4];
 		
@@ -62,7 +63,7 @@ public class KnowPlainText {
 		for(int i = 4; det==0 && i<=plainText.length(); i+=4) {
 			
 			if(i==plainText.length())
-				return "Impossibile trovare chiavi";
+				throw new MyException("Impossibile trovare chiavi");
 			
 			encodeText(plainText, cipherText, P, C, i);
 			detMatrix = new int[][]{{P[0], P[1]}, {P[2], P[3]}};
