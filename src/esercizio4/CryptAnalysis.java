@@ -98,7 +98,14 @@ public class CryptAnalysis {
 									possiblePlainText = cipher.Dec(cypherText);
 									if(isValidTest(possiblePlainText)) {
 										// add to possible pairs
-										possiblePairs.add(new KeyPlainText(possibleKey, possiblePlainText));
+										KeyPlainText newPairs = new KeyPlainText(possibleKey, possiblePlainText);
+										boolean isNew = true;
+										for(KeyPlainText pair: possiblePairs)
+											if(pair.getKey().equals(newPairs.getKey()))
+												isNew = false;
+										if(isNew)
+											possiblePairs.add(newPairs);
+										
 										
 										// Count known words
 										possibleWords = new ArrayList<String>( Arrays.asList(possiblePlainText.split(" ")));
