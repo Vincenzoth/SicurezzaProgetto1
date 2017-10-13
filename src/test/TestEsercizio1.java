@@ -150,7 +150,7 @@ public class TestEsercizio1 {
 			String filenameBigram = "/text/Jones2004_Bigram.txt";
 			CryptAnalysis analysis = new CryptAnalysis(filenameBigram);
 
-			//analysis.substitutionSingle(cypherText. get(0), filenameSingle);
+			//analysis.substitutionSingle(cypherText. et(0), filenameSingle);
 			analysis.decipher("/text/ciphertext2.txt", 5);
 
 		}
