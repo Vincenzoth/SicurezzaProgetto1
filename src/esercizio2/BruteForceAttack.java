@@ -31,6 +31,7 @@ public class BruteForceAttack {
 		articles.addAll(Arrays.asList("and","or","but","so","because"));
 			
 	}
+	
 
 	public ArrayList<KeyPlainText> attack(String cipherText) {	
 		String possibleKey;
