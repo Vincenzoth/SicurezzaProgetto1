@@ -32,7 +32,7 @@ public class CryptAnalysis {
 		frequencyMap = loadFrequencyDouble(frequencyFile);
 		articles = new ArrayList<String>();
 		
-		// ITALIANO
+		// ITALIANO 
 		articles.addAll(Arrays.asList("il","lo","la","i","gli","le"));
 		articles.addAll(Arrays.asList("un","una","uno"));
 		articles.addAll(Arrays.asList("del","dello","dei","degli","della","delle","dell'"));
