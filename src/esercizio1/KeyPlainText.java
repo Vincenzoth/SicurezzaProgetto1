@@ -1,4 +1,4 @@
-package esercizio2;
+package esercizio1;
 
 public class KeyPlainText {
 	private String key;

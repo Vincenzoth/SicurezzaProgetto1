@@ -100,7 +100,7 @@ public class CryptAnalysis {
 
 	}
 
-	public String decipher(String filename) {		
+	public String decipher(String filename, int numBigrams) {		
 		String text="";	
 		KnowPlainText kpt = new KnowPlainText();
 		Hill cipher = new Hill();
@@ -114,27 +114,27 @@ public class CryptAnalysis {
 		Iterator<Entry<String, Integer>> iter1 = frequencyMap.entrySet().iterator();
 		Iterator<Entry<String, Integer>> iter2 = occurencyMap.entrySet().iterator();
 
-		int ITER = 5;
+		//int ITER = 5;
 		String composeFreq;
 		String composeCipher;
 		String testDec;
 		String possibleKey;
 		
-		String[] bigramsFreq = new String[ITER];
-		String[] bigramsCipher = new String[ITER];
+		String[] bigramsFreq = new String[numBigrams];
+		String[] bigramsCipher = new String[numBigrams];
 		
-		for(int i = 0; i < ITER; i++) {
+		for(int i = 0; i < numBigrams; i++) {
 			bigramsFreq[i] = iter1.next().getKey();
 			bigramsCipher[i] = iter2.next().getKey();
 		}
 
-		for (int i = 0; i < ITER; i++){
-			for(int j = 0; j < ITER; j++) {
+		for (int i = 1; i < numBigrams; i++){
+			for(int j = 0; j < i; j++) {
 				if(bigramsFreq[i] != bigramsFreq[j]) {
 					composeFreq = bigramsFreq[i] + bigramsFreq[j];
 
-					for(int x = 0; x < ITER; x++)
-						for(int z = 0; z < ITER; z++) {
+					for(int x = 0; x < numBigrams; x++)
+						for(int z = 0; z < numBigrams; z++) {
 							if(bigramsCipher[x] != bigramsCipher[z]) {
 								composeCipher = bigramsCipher[x] + bigramsCipher[z];
 
@@ -142,8 +142,9 @@ public class CryptAnalysis {
 								kpt.setPlainText(composeFreq);
 								kpt.setCipherText(composeCipher);
 
-								possibleKey = kpt.attack();
+								
 								try {
+									possibleKey = kpt.attack();
 									cipher.setKey(possibleKey);
 									testDec = cipher.Dec(cypherText);
 									if(isValidTest(testDec)) {

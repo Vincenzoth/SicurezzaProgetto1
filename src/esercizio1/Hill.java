@@ -36,7 +36,7 @@ public class Hill implements ClassicCipher{
 
 	@Override
 	public void setKey(String key) throws MyException {
-
+					
 		if(! checkKey(key))
 			throw new MyException("La chiave non è una chiave valida!");
 		
@@ -115,7 +115,7 @@ public class Hill implements ClassicCipher{
 	public String Dec(String cipherText) {
 		// Initialize inverse key
 		if(keyMatrixInv == null)
-			keyMatrixInv = inverseMatric(keyMatrix);
+			keyMatrixInv = inverseMatrix(keyMatrix);
 
 		String plainText = "";
 		int[] digVector = new int[DIM];
@@ -160,7 +160,7 @@ public class Hill implements ClassicCipher{
 		return outMatrix;		
 	}
 
-	private int[][] inverseMatric(int[][] matrix){
+	private int[][] inverseMatrix(int[][] matrix){
 		int[][] inverse = new int[DIM][DIM];
 		int invDet = BigInteger.valueOf(det(matrix)).modInverse(BigInteger.valueOf(modVal)).intValue();
 
@@ -215,10 +215,10 @@ public class Hill implements ClassicCipher{
 	 */
 	private boolean checkKey(String key) {
 		
-		int[][] keyMatrix = computeKeyMatrix(key);
-		
 		if(key.length() != 4)
 			return false;
+		
+		int[][] keyMatrix = computeKeyMatrix(key);				
 
 		for (char ch: key.toCharArray()) 
 			if(encAlphabet.get(Character.toString(ch)) == null)

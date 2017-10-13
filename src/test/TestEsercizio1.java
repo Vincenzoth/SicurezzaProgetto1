@@ -13,9 +13,9 @@ import java.util.List;
 import java.util.Scanner;
 
 import esercizio1.Hill;
+import esercizio1.KeyPlainText;
 import esercizio1.MyException;
 import esercizio2.BruteForceAttack;
-import esercizio2.KeyPlainText;
 import esercizio3.KnowPlainText;
 import esercizio4.CryptAnalysis;
 
@@ -124,12 +124,11 @@ public class TestEsercizio1 {
 			System.out.println("Plain text:   " + plainText);
 			System.out.println("Cipher text:  " + cipherText+"\n");
 
-			key = knowAttack.attack();
-			System.out.println("    - Chiave trovata: " + key);
-
-
-			System.out.println("\n\n----- Verifica chiave -----");
 			try {
+				key = knowAttack.attack();
+				System.out.println("    - Chiave trovata: " + key);
+
+				System.out.println("\n\n----- Verifica chiave -----");
 				cipher.setKey(key);
 				System.out.println("    -  "+ key +", chiave impostata!");
 			} catch (MyException e) {
@@ -152,7 +151,7 @@ public class TestEsercizio1 {
 			CryptAnalysis analysis = new CryptAnalysis(filenameBigram);
 
 			//analysis.substitutionSingle(cypherText.get(0), filenameSingle);
-			analysis.decipher("/text/ciphertext.txt");
+			analysis.decipher("/text/ciphertext2.txt", 5);
 
 		}
 	}

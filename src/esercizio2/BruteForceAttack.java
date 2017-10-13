@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 
 import esercizio1.Hill;
+import esercizio1.KeyPlainText;
 import esercizio1.MyException;
 
 public class BruteForceAttack {
