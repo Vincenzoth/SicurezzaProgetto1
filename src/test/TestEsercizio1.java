@@ -61,11 +61,11 @@ public class TestEsercizio1 {
 			System.out.println("---------------------------------------------------- ");
 			System.out.println("Attacco forza bruta\n");
 
-			String cipherToAttack = "iuaavhsgemtoftmrxpsgj ipiu";
+			//String cipherToAttack = "iuaavhsgemtoftmrxpsgj ipiu";
 			//String cipherToAttack = "kgeprrm ,gilzhpn,fhcaposvv,rqrp'pwwdj vb,gkgklweshwmqrosvvzolwilrfxpgoezfnkldiqs";
 			//String cipherToAttack = "gbgbemumlcdvbb,izn qxpmwatoehldvmg qqumnivlw jmwpoeiyxyhnemwu w,u mnjidqo,fddqdvcvswumlcdvcvswumoe";
 			//String cipherToAttack = "hv ymkne,dxupzmqojqjtmqjrvlqtw,dtvrvphkcqjpzgzzole ham'bsbcujqbjxppzgzbef'xykrvrml'sampzgzjrrvokmbzobyb,qbpzgzjr'be,d bcgwleeknvwffqbjrqhvtrgoydrgnzj'tm yqfzmzo'bwzyqvr";
-			//String cipherToAttack = "x'hi,qtsikgaphpsuowd'dozyuaysefyburrlwk'ekeekcybx'hi,qtsikgaphpsuowd'dozyuaysewdr'mfthyybzir";//inglese
+			String cipherToAttack = "x'hi,qtsikgaphpsuowd'dozyuaysefyburrlwk'ekeekcybx'hi,qtsikgaphpsuowd'dozyuaysewdr'mfthyybzir";//inglese
 			//String cipherToAttack = "ushssoyvxiywkbb hsdmyhyee blhgg,,z, ,znznqywgggvhv'qkberjy";//inglese
 			//String cipherToAttack = "m bqhigabqkmawahofsbhx'frc'zavfqbntgxpo'r ckudiqrqrvexj,jtesllffo'i vttytwofhjgohtbays'i";
 
@@ -82,7 +82,7 @@ public class TestEsercizio1 {
 			System.out.println("            " + possiblePair.getPlainText());
 			System.out.println("\n     Chiave: '" + possiblePair.getKey() +"'" );
 
-			System.out.println("\n\nAltre possibili soluzioni:");
+			System.out.println("\n\nTutte le possibili soluzioni:");
 			System.out.println(pairsKeyPlain.size());
 			for(KeyPlainText kpt: pairsKeyPlain) {
 				System.out.println("     CHIAVE: " + kpt.getKey() + "   TESTO IN CHIARO: " + kpt.getPlainText());
@@ -144,15 +144,30 @@ public class TestEsercizio1 {
 			System.out.println("\n\n---  Test esercizio 4  ----------------------------- ");
 			System.out.println("---------------------------------------------------- ");
 			System.out.println("Attacco con analisi delle frequenze\n");
+			
+			ArrayList<KeyPlainText> possiblePairs;
+			
 	
 			int bigramsToCompare = 5;
-			System.out.println("Attacco combinando i primi" + bigramsToCompare +"digrammi più frequenti");
+			System.out.println("Attacco considerando i primi " + bigramsToCompare +" digrammi più frequenti");
 			
 			
 			String filenameBigram = "/text/Jones2004_Bigram.txt";
 			CryptAnalysis analysis = new CryptAnalysis(filenameBigram);
 
-			analysis.decipher("/text/ciphertext2.txt", bigramsToCompare);
+			possiblePairs = analysis.decipher("/text/ciphertext2.txt", bigramsToCompare);
+			KeyPlainText bestPossiblePair = possiblePairs.remove(0);
+
+			System.out.println("\n     Testo in chiaro:");
+			System.out.println("            " + bestPossiblePair.getPlainText());
+			System.out.println("\n     Chiave: '" + bestPossiblePair.getKey() +"'" );
+			System.out.println("\n\nTutte le possibili soluzioni:");
+			System.out.println("soluzioni possibili: "+possiblePairs.size());
+			for(KeyPlainText kpt: possiblePairs) {
+				System.out.println("     CHIAVE: " + kpt.getKey() + "   TESTO IN CHIARO: " + kpt.getPlainText());
+				//System.out.println("              Chiave: " + kpt.getKey());
+				//System.out.println();
+			}
 
 
 		}

@@ -20,6 +20,7 @@ import java.util.Map.Entry;
 import java.util.Scanner;
 
 import esercizio1.Hill;
+import esercizio1.KeyPlainText;
 import esercizio1.MyException;
 import esercizio3.KnowPlainText;
 
@@ -47,15 +48,116 @@ public class CryptAnalysis {
 		articles.addAll(Arrays.asList("and","or","but","so","because"));
 		
 	}
+	
+	public ArrayList<KeyPlainText> decipher(String filename, int numBigrams) {
+		ArrayList<KeyPlainText> possiblePairs = new ArrayList<KeyPlainText>();
+		
+		KnowPlainText kpt = new KnowPlainText();
+		Hill cipher = new Hill();
+
+		String cypherText = readText(filename);
+
+		Map<String, Integer> occurencyMap = countDoubleOccurency(cypherText);
+
+
+		Iterator<Entry<String, Integer>> iter1 = frequencyMap.entrySet().iterator();
+		Iterator<Entry<String, Integer>> iter2 = occurencyMap.entrySet().iterator();
+
+		String composeFreq;
+		String composeCipher;
+		String possiblePlainText;
+		String possibleKey;
+		ArrayList<String> possibleWords;
+		int maxCommon = 0;
+		KeyPlainText bestKeyPlainText = null;
+		
+		String[] bigramsFreq = new String[numBigrams];
+		String[] bigramsCipher = new String[numBigrams];
+		
+		for(int i = 0; i < numBigrams; i++) {
+			bigramsFreq[i] = iter1.next().getKey();
+			bigramsCipher[i] = iter2.next().getKey();
+		}
+
+		for (int i = 1; i < numBigrams; i++){
+			for(int j = 0; j < i; j++) {
+				if(bigramsFreq[i] != bigramsFreq[j]) {
+					composeFreq = bigramsFreq[i] + bigramsFreq[j];
+
+					for(int x = 0; x < numBigrams; x++)
+						for(int z = 0; z < numBigrams; z++) {
+							if(bigramsCipher[x] != bigramsCipher[z]) {
+								composeCipher = bigramsCipher[x] + bigramsCipher[z];
+
+								try {
+									// known plain
+									kpt.setPlainText(composeFreq);
+									kpt.setCipherText(composeCipher);
+									possibleKey = kpt.attack();
+									cipher.setKey(possibleKey);
+									possiblePlainText = cipher.Dec(cypherText);
+									if(isValidTest(possiblePlainText)) {
+										// add to possible pairs
+										possiblePairs.add(new KeyPlainText(possibleKey, possiblePlainText));
+										
+										// Count known words
+										possibleWords = new ArrayList<String>( Arrays.asList(possiblePlainText.split(" ")));
+										possibleWords.retainAll(articles);
+										if(possibleWords.size() > maxCommon) {
+											maxCommon = possibleWords.size();
+											if(bestKeyPlainText == null)
+												bestKeyPlainText = new KeyPlainText(possibleKey, possiblePlainText);
+											else {
+												bestKeyPlainText.setKey(possibleKey);
+												bestKeyPlainText.setPlainText(possiblePlainText);
+											}										
+										}
+									}
+									
+								} catch (MyException e) {
+									// Chiave non valida
+								}				
+								
+							}
+						}
+				}
+			}
+		}
+		
+		if(possiblePairs.size() != 0)
+			possiblePairs.add(0, bestKeyPlainText);
+		
+		return possiblePairs;
+	}
+	
+	private boolean isValidTest(String text) {
+		// controllo parole lunghe
+		ArrayList<String> words = new ArrayList<String>( Arrays.asList(text.split(" ")));
+		
+		int maxLength = 0;			
+		for(String word: words) {
+			if(word.length() > maxLength)
+				maxLength = word.length();
+		}
+		
+		if(maxLength > 30)
+			return false;
+		
+		// confronto parole ottenute con gli articoli
+		words.retainAll(articles);
+		
+		// ho impostato un numero minimo di 20 articoli nel testo per scartare le altre opzioni
+		if(words.size() >= text.length()/40)
+			return true;
+		
+		return false;
+	}
 
 	private Map<String, Integer> loadFrequencyDouble(String filename) {		//
 		Map<String, Integer> frequencyMap = new HashMap<String, Integer>();
 		File file = new File(Paths.get(System.getProperty("user.dir")+filename).toString());
 		Scanner input;
 		String symbol = "";
-
-		//E che ne saccio.........
-		//occurencyMap.put(" ", 6859483);
 
 		try {
 			input = new Scanner(file);
@@ -99,120 +201,6 @@ public class CryptAnalysis {
 		return occurencyMap;
 
 	}
-
-	public String decipher(String filename, int numBigrams) {		
-		String text="";	
-		KnowPlainText kpt = new KnowPlainText();
-		Hill cipher = new Hill();
-
-		String cypherText=readText(filename);
-
-		Map<String, Integer> occurencyMap = countDoubleOccurency(cypherText);
-
-		//Map<String, String> substitutionMap = new HashMap<String, String>();
-
-		Iterator<Entry<String, Integer>> iter1 = frequencyMap.entrySet().iterator();
-		Iterator<Entry<String, Integer>> iter2 = occurencyMap.entrySet().iterator();
-
-		//int ITER = 5;
-		String composeFreq;
-		String composeCipher;
-		String testDec;
-		String possibleKey;
-		
-		String[] bigramsFreq = new String[numBigrams];
-		String[] bigramsCipher = new String[numBigrams];
-		
-		for(int i = 0; i < numBigrams; i++) {
-			bigramsFreq[i] = iter1.next().getKey();
-			bigramsCipher[i] = iter2.next().getKey();
-		}
-
-		for (int i = 1; i < numBigrams; i++){
-			for(int j = 0; j < i; j++) {
-				if(bigramsFreq[i] != bigramsFreq[j]) {
-					composeFreq = bigramsFreq[i] + bigramsFreq[j];
-
-					for(int x = 0; x < numBigrams; x++)
-						for(int z = 0; z < numBigrams; z++) {
-							if(bigramsCipher[x] != bigramsCipher[z]) {
-								composeCipher = bigramsCipher[x] + bigramsCipher[z];
-
-								// ora provo known plain
-								kpt.setPlainText(composeFreq);
-								kpt.setCipherText(composeCipher);
-
-								
-								try {
-									possibleKey = kpt.attack();
-									cipher.setKey(possibleKey);
-									testDec = cipher.Dec(cypherText);
-									if(isValidTest(testDec)) {
-										System.out.println("\n"+composeFreq+ " -> " + composeCipher);
-										System.out.println("Chiave: "+possibleKey);
-										System.out.println(testDec);
-										System.out.println();
-									}
-									
-								} catch (MyException e) {
-									// Chiave non valida
-								}				
-								
-							}
-						}
-				}
-			}
-		}
-
-
-		/*
-
-		  	while(iter1.hasNext() && iter2.hasNext()) {
-			Entry<String, Integer> e1 = iter1.next();		  
-			Entry<String, Integer> e2 = iter2.next();		  
-			substitutionMap.put(e2.getKey(), e1.getKey());
-		}
-
-		 for(String s : cypherText.split("(?<=\\G.{2})")) {			
-			text +=substitutionMap.get(s);
-		}
-
-		System.out.println(Arrays.toString(substitutionMap.entrySet().toArray()));
-		System.out.println(frequencyMap.size());
-		System.out.println(occurencyMap.size());
-		System.out.println(substitutionMap.size());
-		System.out.println(cypherText);
-		System.out.println(text);
-		 */
-
-		return text;
-
-	}
-	
-	private boolean isValidTest(String text) {
-		// controllo parole lunghe
-		ArrayList<String> words = new ArrayList<String>( Arrays.asList(text.split(" ")));
-		int maxLength = 0;
-						
-		
-		for(String word: words) {
-			if(word.length() > maxLength)
-				maxLength = word.length();
-		}
-		
-		if(maxLength > 30)
-			return false;
-		
-		// confronto parole ottenute con gli articoli
-		words.retainAll(articles);
-		
-		// ho impostato un numero minimo di 20 articoli nel testo per scartare le altre opzioni
-		if(words.size() >= 20)
-			return true;
-		
-		return false;
-	}
-
 
 	private static Map<String, Integer> sortByValue(Map<String, Integer> unsortMap) {
 
@@ -264,90 +252,5 @@ public class CryptAnalysis {
 
 	}
 
-	/*
-	public Map<String, Integer> loadFrequencySingle(String filename) {
-		//Map<String, List<String>> doubleMap = new HashMap<String, List<String>>();
-		Map<String, Integer> occurencyMap = new HashMap<String, Integer>();
-		File file = new File(Paths.get(System.getProperty("user.dir")+filename).toString());
-		Scanner input;
-		String symbol = "";
 
-		//E che ne saccio.........
-		occurencyMap.put(" ", 99999999);
-
-		try {
-			input = new Scanner(file);
-			 while (input.hasNextLine()) {
-				 List<String> tmp = new ArrayList<String>();			 
-				 tmp.addAll(Arrays.asList(input.nextLine().split("\t")));
-				 if(Hill.encAlphabet.containsKey(tmp.get(0))) {
-					 symbol=tmp.remove(0);
-				 	 int sum=0;
-					 for(String element:tmp){						  
-					    sum += Integer.parseInt(element); 						
-					 }				 		 
-					 occurencyMap.put(symbol, sum/tmp.size());				 
-				 }
-
-			 }
-		} catch (FileNotFoundException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-
-		occurencyMap = sortByValue(occurencyMap);
-		System.out.println(Arrays.toString(occurencyMap.entrySet().toArray()));		
-		return occurencyMap;	
-	}
-	 */
-
-	/*
-	public Map<String, Integer> countSingleOccurency(String cypherText){
-		Map<String, Integer> occurencyMap = new HashMap<String, Integer>();
-
-		for(String c : cypherText.split("")) {				
-			if(occurencyMap.containsKey(c))
-				occurencyMap.put(c, occurencyMap.get(c)+1);
-			else
-				occurencyMap.put(c, 1);			
-		}
-
-		occurencyMap = sortByValue(occurencyMap);
-		System.out.println(Arrays.toString(occurencyMap.entrySet().toArray()));
-		return occurencyMap;
-
-	}
-	 */
-
-	/*
-	public String substitutionSingle(String cypherText, String filename) {		
-		String text="";
-
-		Map<String, Integer> frequencyMap = loadFrequencySingle(filename);
-		cypherText = "cfdbvtf fbdi mfuufs jo uif nfttbhf ibt b ejsfdu usbotmbujpo up bopuifs mfuufs gsfrvfodz bobmztjt dbo cf vtfe up efdjqifs uif nfttbhf gps fybnqmf uif mfuufs f jt uif nptu dpnnpomz vtfe mfuufs jo uif fohmjti mbohvbhf uivt jg uif nptu dpnnpo mfuufs jo b tfdsfu nfttbhf jt l ju jt mjlfmz uibu l sfqsftfout f beejujpobmmz dpnnpo xpse foejoht tvdi bt joh mz boe ft bmtp hjwf dmvft";
-		Map<String, Integer> occurencyMap = countSingleOccurency(cypherText);
-
-		Map<String, String> substitutionMap = new HashMap<String, String>();
-
-		Iterator<Entry<String, Integer>> iter1 = frequencyMap.entrySet().iterator();
-		Iterator<Entry<String, Integer>> iter2 = occurencyMap.entrySet().iterator();
-		while(iter1.hasNext() && iter2.hasNext()) {
-		  Entry<String, Integer> e1 = iter1.next();
-		  Entry<String, Integer> e2 = iter2.next();
-		  substitutionMap.put(e2.getKey(), e1.getKey());
-		}
-
-		for(String c : cypherText.split("")) {			
-			text +=substitutionMap.get(c);			
-		}
-
-		System.out.println(Arrays.toString(substitutionMap.entrySet().toArray()));
-		System.out.println(frequencyMap.size());
-		System.out.println(occurencyMap.size());
-		System.out.println(cypherText);
-		System.out.println(text);
-		return text;
-
-	}
-	 */
 }
