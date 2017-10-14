@@ -153,8 +153,8 @@ public class CryptAnalysis {
 		// confronto parole ottenute con gli articoli
 		words.retainAll(articles);
 		
-		// ho impostato un numero minimo di 20 articoli nel testo per scartare le altre opzioni
-		if(words.size() >= text.length()/40)
+		// verifico che almeno il 2.5% delle parole sia tra quelle conosciute
+		if(words.size() >= text.length()*2.5/100)
 			return true;
 		
 		return false;
