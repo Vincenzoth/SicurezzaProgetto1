@@ -20,26 +20,29 @@ public class Hill implements ClassicCipher{
 	public Hill() {
 		keyMatrix = new int[DIM][DIM];
 		keyMatrix = null;
-		
+
 		decAlphabet = new HashMap<Integer,String>();
 		encAlphabet = new HashMap<String,Integer>();
-		
+
 		String[] alphArray = alph.split("");		
 		for(int i=0; i<alphArray.length;i++) {
 			decAlphabet.put(i, alphArray[i]);
 			encAlphabet.put(alphArray[i], i);
 		}
-		
+
 		modVal = encAlphabet.size();
-		
+
 	}
 
-	@Override
+	/**
+	 * Il metodo setta la chiave passata come parametro key.
+	 * Lancia eccezione se la chiave passata come parametro non è una chiave valida
+	 */
 	public void setKey(String key) throws MyException {
-					
+
 		if(! checkKey(key))
 			throw new MyException("La chiave non è una chiave valida!");
-		
+
 		if(keyMatrixInv != null)
 			keyMatrixInv = null;
 
@@ -52,13 +55,17 @@ public class Hill implements ClassicCipher{
 	}
 
 
-	@Override
+	/**
+	 * Il metodo restituisce la chiave corrente.
+	 */
 	public String getKey() {
 		return this.key;
 	}
 
 
-	@Override
+	/**
+	 * Il metodo restituisce una chiave valida generata casualmente.
+	 */
 	public String genKey() {
 		SecureRandom random = new SecureRandom();
 		int ranval;
@@ -68,14 +75,16 @@ public class Hill implements ClassicCipher{
 			ranval = random.nextInt(28);
 			genKey = genKey + decAlphabet.get(ranval);
 		}
-		
+
 		if(! checkKey(genKey))
 			genKey = genKey();
 
 		return genKey;
 	}
 
-	@Override
+	/**
+	 * Il metodo codifica la stringa plainText, restituendo la corrispondente stringa codificata.
+	 */
 	public String Enc(String plainText) {
 		String cipherText = "";
 		int[] digVector = new int[DIM];
@@ -110,8 +119,10 @@ public class Hill implements ClassicCipher{
 		return cipherText;
 	}
 
-	@Override
 
+	/**
+	 * Il metodo decodifica la stringa cipherText, restituendo la corrispondente stringa decodificata.
+	 */
 	public String Dec(String cipherText) {
 		// Initialize inverse key
 		if(keyMatrixInv == null)
@@ -147,8 +158,6 @@ public class Hill implements ClassicCipher{
 
 	/**
 	 * Il metodo calcola la matrice chiave a partire dalla stringa key
-	 * @param key
-	 * @return una matrice di interi
 	 */
 	private int[][] computeKeyMatrix(String key){
 		int[][] outMatrix = new int[DIM][DIM];
@@ -160,6 +169,10 @@ public class Hill implements ClassicCipher{
 		return outMatrix;		
 	}
 
+	/**
+	 * Il metodo calcola la matrice inversa della matrice matrix passata come parametro.
+	 * Le operazione sono effettuate in algebra modulare.
+	 */
 	private int[][] inverseMatrix(int[][] matrix){
 		int[][] inverse = new int[DIM][DIM];
 		int invDet = BigInteger.valueOf(det(matrix)).modInverse(BigInteger.valueOf(modVal)).intValue();
@@ -175,19 +188,19 @@ public class Hill implements ClassicCipher{
 		return inverse;
 	}
 
-
+	/**
+	 * Il metodo calcola il modulo y del numero x
+	 */
 	public int mod(int x, int y){
 		int result = x % y;
 		return result < 0? result + y : result;
 	}
 
-	
-	/**
-	 * Il metodo calcola il determinante della matrice
-	 * @param matrix
-	 * @return un intero rappresentate il determinante della matrice
-	 */
 
+	/**
+	 * Il metodo calcola il determinante della matrice di interi matrix
+	 * Le operazione sono effettuate in algebra modulare.
+	 */
 	public int det(int[][] matrix) {
 		int d = matrix[0][0]*matrix[1][1]-matrix[0][1]*matrix[1][0];		
 		// fai modulo
@@ -196,9 +209,8 @@ public class Hill implements ClassicCipher{
 	}
 
 	/**
-	 * Il metodo inverte il numero n in modulo 29
-	 * @param a
-	 * @return
+	 * Il metodo inverte il numero n.
+	 * Le operazione sono effettuate in algebra modulare.
 	 */
 	public int modInverse(int n){
 		n = n % modVal;
@@ -210,14 +222,12 @@ public class Hill implements ClassicCipher{
 
 	/**
 	 * Il metodo verifica che la chiave passata come parametro sia una chiave valida
-	 * @param key, stringa da testaee
-	 * @return true se la chave è valida, flase altrimenti
 	 */
 	private boolean checkKey(String key) {
-		
+
 		if(key.length() != 4)
 			return false;
-		
+
 		int[][] keyMatrix = computeKeyMatrix(key);				
 
 		for (char ch: key.toCharArray()) 
