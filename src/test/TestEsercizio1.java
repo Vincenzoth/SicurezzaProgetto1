@@ -12,10 +12,10 @@ import esercizio4.CryptAnalysis;
 public class TestEsercizio1 {
 	public static void main(String[] args) {
 
-		boolean test1 = false;
-		boolean test2 = false;
+		boolean test1 = true;
+		boolean test2 = true;
 		boolean test3 = false;
-		boolean test4 = true;
+		boolean test4 = false;
 
 		Hill cipher = new Hill();
 
@@ -34,6 +34,7 @@ public class TestEsercizio1 {
 			System.out.println("            \""+key+"\"");
 
 			System.out.println("\n   - Imposta la chiave:");
+			
 			try {
 				cipher.setKey("ggpa");
 				//cipher.setKey(key);
@@ -41,8 +42,10 @@ public class TestEsercizio1 {
 			} catch (MyException e) {
 				System.out.println("             ERRORE !!  "+e.getMessage());
 			}
-
+			
+			System.out.println("\n   - chiave: "+ cipher.genKey());
 			plainText = "i topi non avevano nipoti";
+			/*
 			plainText = "far out in the uncharted backwaters of the unfashionable end of the western spiral arm of the galaxy lies a small unregarded " + 
 					"yellow sun orbiting this at a distance of roughly ninetytwo million miles is an utterly insignificant little blue green planet whose ape " + 
 					"descended life forms are so amazingly primitive that they still think digital watches are a pretty neat idea " +  
@@ -71,7 +74,7 @@ public class TestEsercizio1 {
 					"respects first, it is slightly cheaper, and secondly it has the words ''don't panic'' inscribed in large friendly letters on its cover " + 
 					"but the story of this terrible, stupid thursday, the story of its extraordinary consequences, and the story of how these " + 
 					"consequences are inextricably intertwined with this remarkable book begins very simply it begins with a house";
-
+*/
 			System.out.println("\n   - Criptare la frase \""+plainText+"\":");
 
 			cipherText = cipher.Enc(plainText);
@@ -91,8 +94,8 @@ public class TestEsercizio1 {
 			//String cipherToAttack = "iuaavhsgemtoftmrxpsgj ipiu";
 			//String cipherToAttack = "kgeprrm ,gilzhpn,fhcaposvv,rqrp'pwwdj vb,gkgklweshwmqrosvvzolwilrfxpgoezfnkldiqs";
 			//String cipherToAttack = "gbgbemumlcdvbb,izn qxpmwatoehldvmg qqumnivlw jmwpoeiyxyhnemwu w,u mnjidqo,fddqdvcvswumlcdvcvswumoe";
-			//String cipherToAttack = "hv ymkne,dxupzmqojqjtmqjrvlqtw,dtvrvphkcqjpzgzzole ham'bsbcujqbjxppzgzbef'xykrvrml'sampzgzjrrvokmbzobyb,qbpzgzjr'be,d bcgwleeknvwffqbjrqhvtrgoydrgnzj'tm yqfzmzo'bwzyqvr";
-			String cipherToAttack = "x'hi,qtsikgaphpsuowd'dozyuaysefyburrlwk'ekeekcybx'hi,qtsikgaphpsuowd'dozyuaysewdr'mfthyybzir";//inglese
+			String cipherToAttack = "hv ymkne,dxupzmqojqjtmqjrvlqtw,dtvrvphkcqjpzgzzole ham'bsbcujqbjxppzgzbef'xykrvrml'sampzgzjrrvokmbzobyb,qbpzgzjr'be,d bcgwleeknvwffqbjrqhvtrgoydrgnzj'tm yqfzmzo'bwzyqvr";
+			//String cipherToAttack = "x'hi,qtsikgaphpsuowd'dozyuaysefyburrlwk'ekeekcybx'hi,qtsikgaphpsuowd'dozyuaysewdr'mfthyybzir";//inglese
 			//String cipherToAttack = "ushssoyvxiywkbb hsdmyhyee blhgg,,z, ,znznqywgggvhv'qkberjy";//inglese
 			//String cipherToAttack = "m bqhigabqkmawahofsbhx'frc'zavfqbntgxpo'r ckudiqrqrvexj,jtesllffo'i vttytwofhjgohtbays'i";
 
