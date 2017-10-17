@@ -1,14 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <class-diagram version="1.1.13" icons="true" always-add-relationships="false" generalizations="true" realizations="true" 
   associations="true" dependencies="false" nesting-relationships="true" router="FAN">  
-  <package id="1" language="java" name="esercizio4" project="SicurezzaProgetto1" 
-    file="/SicurezzaProgetto1/src/esercizio4" binary="false" corner="BOTTOM_RIGHT">    
-    <position height="50" width="101" x="32" y="14"/>    
+  <package id="1" language="java" name="esercizio2" project="SicurezzaProgetto1" 
+    file="/SicurezzaProgetto1/src/esercizio2" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="-1" width="-1" x="111" y="35"/>    
     <display autosize="true" stereotype="true" sort-features="false" accessors="true"/>  
   </package>  
-  <class id="2" language="java" name="esercizio4.CryptAnalysis" project="SicurezzaProgetto1" 
-    file="/SicurezzaProgetto1/src/esercizio4/CryptAnalysis.java" binary="false" corner="BOTTOM_RIGHT">    
-    <position height="-1" width="-1" x="176" y="199"/>    
+  <class id="2" language="java" name="esercizio2.BruteForceAttack" project="SicurezzaProgetto1" 
+    file="/SicurezzaProgetto1/src/esercizio2/BruteForceAttack.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="-1" width="-1" x="167" y="188"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
       sort-features="false" accessors="true" visibility="true">      
       <attributes public="true" package="true" protected="true" private="true" static="true"/>      

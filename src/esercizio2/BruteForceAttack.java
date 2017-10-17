@@ -163,6 +163,10 @@ public class BruteForceAttack {
 		return key;
 	}
 	
+	/**
+	 * Il metodo legge le parole presenti nei file dizionario.txt e dictionary.txt e crea e restituisce
+	 * un ArrayList contenente tutte le parole presenti nei due file.
+	 */
 	private ArrayList<String> loadDictionary() {
 		ArrayList<String> dictionary = new ArrayList<String>();
 		
