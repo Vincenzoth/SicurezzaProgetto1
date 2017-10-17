@@ -1,5 +1,9 @@
 package esercizio2;
 
+import java.io.IOException;
+import java.nio.charset.Charset;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.Arrays;
 
@@ -18,20 +22,25 @@ public class BruteForceAttack {
 	public BruteForceAttack() {
 		cipher = new Hill();
 
+
 		knownWords = new ArrayList<String>();
+		knownWords = loadDictionary();
+		
+		/*
 		// ITALIANO
 		knownWords.addAll(Arrays.asList("il","lo","la","i","gli","le"));
 		knownWords.addAll(Arrays.asList("un","una","uno"));
 		knownWords.addAll(Arrays.asList("del","dello","dei","degli","della","delle","dell'"));
 		knownWords.addAll(Arrays.asList("in","con","su","per","tra","fra"));
 		knownWords.addAll(Arrays.asList("non","nei"));
-		
+
 		//INGLESE
 		knownWords.addAll(Arrays.asList("the","a","an","some","any"));
 		knownWords.addAll(Arrays.asList("is","are","was","have","has","had"));
 		knownWords.addAll(Arrays.asList("in","on","at"));
 		knownWords.addAll(Arrays.asList("of","lot","most"));
 		knownWords.addAll(Arrays.asList("and","or","but","so","because"));		
+		*/
 	}
 	
 	/**
@@ -152,5 +161,28 @@ public class BruteForceAttack {
 				+ Hill.decAlphabet.get(ch4);
 
 		return key;
+	}
+	
+	private ArrayList<String> loadDictionary() {
+		ArrayList<String> dictionary = new ArrayList<String>();
+		
+		byte[] italian;
+		byte[] english;
+		
+		try {
+			italian = Files.readAllBytes(Paths.get(System.getProperty("user.dir") + "/text/dizionario.txt"));			
+			english = Files.readAllBytes(Paths.get(System.getProperty("user.dir") + "/text/dictionary.txt"));
+			
+			byte[] combined = new byte[italian.length + english.length];
+
+			System.arraycopy(italian, 0, combined, 0, italian.length);
+			System.arraycopy(english, 0, combined, italian.length, english.length);			
+			dictionary.addAll(Arrays.asList(new String(combined, Charset.defaultCharset()).split("\r\n")));			
+		} catch (IOException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}		
+		
+		return dictionary;	
 	}
 }
