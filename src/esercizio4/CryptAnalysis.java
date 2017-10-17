@@ -27,12 +27,12 @@ import esercizio3.KnowPlainText;
 public class CryptAnalysis {
 
 	private Map<String, Integer> frequencyMap;
-	private ArrayList<String> articles;
+	private ArrayList<String> knownWords;
 
 	public CryptAnalysis(String frequencyFile) {
 		frequencyMap = loadFrequencyDouble(frequencyFile);				
 		
-		articles=loadDictionary();
+		knownWords=loadDictionary();
 		
 	}
 	
@@ -96,7 +96,7 @@ public class CryptAnalysis {
 										
 										// Count known words
 										possibleWords = new ArrayList<String>( Arrays.asList(possiblePlainText.split(" ")));
-										possibleWords.retainAll(articles);
+										possibleWords.retainAll(knownWords);
 										if(possibleWords.size() > maxCommon) {
 											maxCommon = possibleWords.size();
 											if(bestKeyPlainText == null)
@@ -138,7 +138,7 @@ public class CryptAnalysis {
 			return false;
 		
 		// confronto parole ottenute con gli articoli
-		words.retainAll(articles);
+		words.retainAll(knownWords);
 		
 		// verifico che almeno il 2.5% delle parole sia tra quelle conosciute
 		if(words.size() >= text.length()*2.5/100)
