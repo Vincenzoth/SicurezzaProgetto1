@@ -178,10 +178,10 @@ public class CryptAnalysis {
 		return frequencyMap;	
 	}
 
-	private Map<String, Integer> countDoubleOccurency(String cypherText){
+	private Map<String, Integer> countDoubleOccurency(String cipherText){
 		Map<String, Integer> occurencyMap = new HashMap<String, Integer>();
 
-		for(String s : cypherText.split("(?<=\\G.{2})")) {
+		for(String s : cipherText.split("(?<=\\G.{2})")) {
 			//if((int)c!=10 && (int)c!=13) {				
 			if(occurencyMap.containsKey(s))
 				occurencyMap.put(s, occurencyMap.get(s)+1);
