@@ -1,5 +1,9 @@
 package esercizio2;
 
+import java.io.IOException;
+import java.nio.charset.Charset;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.Arrays;
 
@@ -14,21 +18,8 @@ public class BruteForceAttack {
 
 	public BruteForceAttack() {
 		cipher = new Hill();
-
-		articles = new ArrayList<String>();
-		// ITALIANO
-		articles.addAll(Arrays.asList("il","lo","la","i","gli","le"));
-		articles.addAll(Arrays.asList("un","una","uno"));
-		articles.addAll(Arrays.asList("del","dello","dei","degli","della","delle","dell'"));
-		articles.addAll(Arrays.asList("in","con","su","per","tra","fra"));
-		articles.addAll(Arrays.asList("non","nei"));
 		
-		//INGLESE
-		articles.addAll(Arrays.asList("the","a","an","some","any"));
-		articles.addAll(Arrays.asList("is","are","was","have","has","had"));
-		articles.addAll(Arrays.asList("in","on","at"));
-		articles.addAll(Arrays.asList("of","lot","most"));
-		articles.addAll(Arrays.asList("and","or","but","so","because"));
+		articles = loadDictionary();	
 			
 	}
 	
@@ -134,5 +125,28 @@ public class BruteForceAttack {
 				+ Hill.decAlphabet.get(d);
 
 		return key;
+	}
+	
+	private ArrayList<String> loadDictionary() {
+		ArrayList<String> dictionary = new ArrayList<String>();
+		
+		byte[] italian;
+		byte[] english;
+		
+		try {
+			italian = Files.readAllBytes(Paths.get(System.getProperty("user.dir") + "/text/dizionario.txt"));			
+			english = Files.readAllBytes(Paths.get(System.getProperty("user.dir") + "/text/dictionary.txt"));
+			
+			byte[] combined = new byte[italian.length + english.length];
+
+			System.arraycopy(italian, 0, combined, 0, italian.length);
+			System.arraycopy(english, 0, combined, italian.length, english.length);			
+			dictionary.addAll(Arrays.asList(new String(combined, Charset.defaultCharset()).split("\r\n")));			
+		} catch (IOException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}		
+		
+		return dictionary;	
 	}
 }

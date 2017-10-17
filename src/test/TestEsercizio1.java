@@ -173,7 +173,7 @@ public class TestEsercizio1 {
 			ArrayList<KeyPlainText> possiblePairs;
 			
 	
-			int bigramsToCompare = 10;
+			int bigramsToCompare = 4;
 			System.out.println("Attacco considerando i primi " + bigramsToCompare +" digrammi più frequenti\n");
 			
 			
@@ -181,11 +181,15 @@ public class TestEsercizio1 {
 			CryptAnalysis analysis = new CryptAnalysis(filenameBigram);
 
 			possiblePairs = analysis.decipher("/text/ciphertext3.txt", bigramsToCompare);
-			KeyPlainText bestPossiblePair = possiblePairs.remove(0);
-
-			System.out.println("\n     Testo in chiaro:");
-			System.out.println("            " + bestPossiblePair.getPlainText());
-			System.out.println("\n     Chiave: '" + bestPossiblePair.getKey() +"'" );
+			try {
+				KeyPlainText bestPossiblePair = possiblePairs.remove(0);
+				System.out.println("\n     Testo in chiaro:");
+				System.out.println("            " + bestPossiblePair.getPlainText());
+				System.out.println("\n     Chiave: '" + bestPossiblePair.getKey() +"'" );
+			}catch(IndexOutOfBoundsException e) {
+				System.out.println("Non è possibile decriptare il testo con "+bigramsToCompare+" diagrammi");
+			}			
+			
 			System.out.println("\n\nTutte le possibili soluzioni:");
 			System.out.println("soluzioni possibili: "+possiblePairs.size());
 			for(KeyPlainText kpt: possiblePairs) {
