@@ -204,9 +204,9 @@ public class Hill implements ClassicCipher{
 	/**
 	 * Il metodo calcola il modulo y del numero x
 	 */
-	public int mod(int x, int y){
-		int result = x % y;
-		return result < 0? result + y : result;
+	public int mod(int n, int mod){
+		int result = n % mod;
+		return result < 0? result + mod : result;
 	}
 
 

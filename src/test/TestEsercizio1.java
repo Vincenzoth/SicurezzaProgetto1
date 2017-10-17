@@ -12,10 +12,10 @@ import esercizio4.CryptAnalysis;
 public class TestEsercizio1 {
 	public static void main(String[] args) {
 
-		boolean test1 = true;
-		boolean test2 = true;
+		boolean test1 = false;
+		boolean test2 = false;
 		boolean test3 = false;
-		boolean test4 = false;
+		boolean test4 = true;
 
 		Hill cipher = new Hill();
 
@@ -32,18 +32,18 @@ public class TestEsercizio1 {
 			key = cipher.genKey();
 
 			System.out.println("            \""+key+"\"");
-
-			System.out.println("\n   - Imposta la chiave:");
 			
+			
+			key = "alto";
+			System.out.println("\n   - Imposta la chiave '" + key + "':");
 			try {
-				cipher.setKey("ggpa");
-				//cipher.setKey(key);
+				cipher.setKey(key);
 				System.out.println("             Chiave impostata!");
 			} catch (MyException e) {
 				System.out.println("             ERRORE !!  "+e.getMessage());
 			}
 			
-			System.out.println("\n   - chiave: "+ cipher.genKey());
+			System.out.println("\n   - chiave: "+ cipher.getKey());
 			plainText = "i topi non avevano nipoti";
 			/*
 			plainText = "far out in the uncharted backwaters of the unfashionable end of the western spiral arm of the galaxy lies a small unregarded " + 
@@ -91,10 +91,10 @@ public class TestEsercizio1 {
 			System.out.println("---------------------------------------------------- ");
 			System.out.println("Attacco forza bruta\n");
 
-			//String cipherToAttack = "iuaavhsgemtoftmrxpsgj ipiu";
+			String cipherToAttack = "iuaavhsgemtoftmrxpsgj ipiu";
 			//String cipherToAttack = "kgeprrm ,gilzhpn,fhcaposvv,rqrp'pwwdj vb,gkgklweshwmqrosvvzolwilrfxpgoezfnkldiqs";
 			//String cipherToAttack = "gbgbemumlcdvbb,izn qxpmwatoehldvmg qqumnivlw jmwpoeiyxyhnemwu w,u mnjidqo,fddqdvcvswumlcdvcvswumoe";
-			String cipherToAttack = "hv ymkne,dxupzmqojqjtmqjrvlqtw,dtvrvphkcqjpzgzzole ham'bsbcujqbjxppzgzbef'xykrvrml'sampzgzjrrvokmbzobyb,qbpzgzjr'be,d bcgwleeknvwffqbjrqhvtrgoydrgnzj'tm yqfzmzo'bwzyqvr";
+			//String cipherToAttack = "hv ymkne,dxupzmqojqjtmqjrvlqtw,dtvrvphkcqjpzgzzole ham'bsbcujqbjxppzgzbef'xykrvrml'sampzgzjrrvokmbzobyb,qbpzgzjr'be,d bcgwleeknvwffqbjrqhvtrgoydrgnzj'tm yqfzmzo'bwzyqvr";
 			//String cipherToAttack = "x'hi,qtsikgaphpsuowd'dozyuaysefyburrlwk'ekeekcybx'hi,qtsikgaphpsuowd'dozyuaysewdr'mfthyybzir";//inglese
 			//String cipherToAttack = "ushssoyvxiywkbb hsdmyhyee blhgg,,z, ,znznqywgggvhv'qkberjy";//inglese
 			//String cipherToAttack = "m bqhigabqkmawahofsbhx'frc'zavfqbntgxpo'r ckudiqrqrvexj,jtesllffo'i vttytwofhjgohtbays'i";
@@ -141,11 +141,6 @@ public class TestEsercizio1 {
 			plainText = "i topi non avevano nipoti";
 			cipherText = "iuaavhsgemtoftmrxpsgj ipiu";
 
-			plainText = "thhe";
-			cipherText = "ei ,";
-			cipherText = "v,j'";
-
-
 			KnowPlainText knowAttack = new KnowPlainText(plainText, cipherText);
 			System.out.println("Plain text:   " + plainText);
 			System.out.println("Cipher text:  " + cipherText+"\n");
@@ -176,14 +171,14 @@ public class TestEsercizio1 {
 			ArrayList<KeyPlainText> possiblePairs;
 			
 	
-			int bigramsToCompare = 10;
+			int bigramsToCompare = 5;
 			System.out.println("Attacco considerando i primi " + bigramsToCompare +" digrammi più frequenti\n");
 			
 			
 			String filenameBigram = "/text/Jones2004_Bigram.txt";
 			CryptAnalysis analysis = new CryptAnalysis(filenameBigram);
 
-			possiblePairs = analysis.decipher("/text/ciphertext3.txt", bigramsToCompare);
+			possiblePairs = analysis.decipher("/text/ciphertext.txt", bigramsToCompare);
 			KeyPlainText bestPossiblePair = possiblePairs.remove(0);
 
 			System.out.println("\n     Testo in chiaro:");

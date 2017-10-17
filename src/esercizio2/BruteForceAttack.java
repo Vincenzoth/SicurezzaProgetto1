@@ -10,29 +10,35 @@ import esercizio1.MyException;
 public class BruteForceAttack {
 	private static final int MOD = 29; 
 	private Hill cipher;
-	private ArrayList<String> articles;
+	private ArrayList<String> knownWords;
 
+	/**
+	 * Costruttore della classe.
+	 */
 	public BruteForceAttack() {
 		cipher = new Hill();
 
-		articles = new ArrayList<String>();
+		knownWords = new ArrayList<String>();
 		// ITALIANO
-		articles.addAll(Arrays.asList("il","lo","la","i","gli","le"));
-		articles.addAll(Arrays.asList("un","una","uno"));
-		articles.addAll(Arrays.asList("del","dello","dei","degli","della","delle","dell'"));
-		articles.addAll(Arrays.asList("in","con","su","per","tra","fra"));
-		articles.addAll(Arrays.asList("non","nei"));
+		knownWords.addAll(Arrays.asList("il","lo","la","i","gli","le"));
+		knownWords.addAll(Arrays.asList("un","una","uno"));
+		knownWords.addAll(Arrays.asList("del","dello","dei","degli","della","delle","dell'"));
+		knownWords.addAll(Arrays.asList("in","con","su","per","tra","fra"));
+		knownWords.addAll(Arrays.asList("non","nei"));
 		
 		//INGLESE
-		articles.addAll(Arrays.asList("the","a","an","some","any"));
-		articles.addAll(Arrays.asList("is","are","was","have","has","had"));
-		articles.addAll(Arrays.asList("in","on","at"));
-		articles.addAll(Arrays.asList("of","lot","most"));
-		articles.addAll(Arrays.asList("and","or","but","so","because"));
-			
+		knownWords.addAll(Arrays.asList("the","a","an","some","any"));
+		knownWords.addAll(Arrays.asList("is","are","was","have","has","had"));
+		knownWords.addAll(Arrays.asList("in","on","at"));
+		knownWords.addAll(Arrays.asList("of","lot","most"));
+		knownWords.addAll(Arrays.asList("and","or","but","so","because"));		
 	}
 	
-
+	/**
+	 * Il metodo implementa un attacco di forza bruta per rompere il cifrario di Hill.	 
+	 * @param cipherText
+	 * @return arrayList delle coppie "ciave"-"testo in chiaro", la coppia in posizione 0 è la coppia che con probabilità maggiore è quella che decifra il testo in ingresso
+	 */
 	public ArrayList<KeyPlainText> attack(String cipherText) {	
 		String possibleKey;
 		String possiblePlainText;
@@ -62,7 +68,7 @@ public class BruteForceAttack {
 								possiblePairs.add(new KeyPlainText(possibleKey, possiblePlainText));
 
 								possibleWords = new ArrayList<String>( Arrays.asList(possiblePlainText.split(" ")));
-								possibleWords.retainAll(articles);
+								possibleWords.retainAll(knownWords);
 
 								if(possibleWords.size() > maxCommon) {
 									maxCommon = possibleWords.size();
@@ -81,8 +87,8 @@ public class BruteForceAttack {
 						}						
 					}
 
-		if(possiblePairs.size() == 0 && !articles.contains("i")) {
-			articles.add("i");
+		if(possiblePairs.size() == 0 && !knownWords.contains("i")) {
+			knownWords.add("i");
 			possiblePairs = attack(cipherText);
 		}
 		else {
@@ -92,6 +98,11 @@ public class BruteForceAttack {
 		return possiblePairs;
 	}
 
+	/**
+	 * Il metodo verifica se il testo passato come parametro può essere un teso di senso compiuto nella ingua italiana o inglese. 
+	 * @param text 
+	 * @return
+	 */
 	private boolean isValidText(String text) {
 		String[] words = text.split(" ");
 		int maxLength = 0;
@@ -103,7 +114,7 @@ public class BruteForceAttack {
 			if(word.length() > 2 && word.substring(0, (word.length()-1)).contains(","))
 				return false;
 
-			if(articles.contains(word))
+			if(knownWords.contains(word))
 				numKnownWords++;
 
 			if(word.length() > maxLength)
@@ -113,7 +124,7 @@ public class BruteForceAttack {
 
 		}
 
-		if(maxLength > 25)
+		if(maxLength > 30)
 			return false;
 		if (numKnownWords < 2)
 			return false;
@@ -126,12 +137,19 @@ public class BruteForceAttack {
 		return true;
 	}
 
-
-	private String computeKey(int a, int b, int c, int d) {
-		String key = Hill.decAlphabet.get(a) 
-				+ Hill.decAlphabet.get(b)
-				+ Hill.decAlphabet.get(c)
-				+ Hill.decAlphabet.get(d);
+	/**
+	 * Il metodo calcola e restituisce la stringa della chiave a patire dai quattro interi passati come parametro 
+	 * @param ch1
+	 * @param ch2
+	 * @param ch3
+	 * @param ch4
+	 * @return
+	 */
+	private String computeKey(int ch1, int ch2, int ch3, int ch4) {
+		String key = Hill.decAlphabet.get(ch1) 
+				+ Hill.decAlphabet.get(ch2)
+				+ Hill.decAlphabet.get(ch3)
+				+ Hill.decAlphabet.get(ch4);
 
 		return key;
 	}
