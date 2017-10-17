@@ -153,7 +153,7 @@ public class BruteForceAttack {
 	 * @param ch3
 	 * @param ch4
 	 * @return
-	 */
+	 */ 
 	private String computeKey(int ch1, int ch2, int ch3, int ch4) {
 		String key = Hill.decAlphabet.get(ch1) 
 				+ Hill.decAlphabet.get(ch2)
