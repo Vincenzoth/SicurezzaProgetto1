@@ -181,6 +181,7 @@ public class TestEsercizio1 {
 			CryptAnalysis analysis = new CryptAnalysis(filenameBigram);
 
 			possiblePairs = analysis.decipher("/text/ciphertext3.txt", bigramsToCompare);
+			
 			try {
 				KeyPlainText bestPossiblePair = possiblePairs.remove(0);
 				System.out.println("\n     Testo in chiaro:");
