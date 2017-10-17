@@ -13,14 +13,18 @@ public class Hill implements ClassicCipher{
 	private String key;
 	// due mappe al posto di una bidirezionale
 	private String alph = " abcdefghijklmnopqrstuvwxyz,'";
-	public static Map<Integer,String> decAlphabet;
-	public static Map<String,Integer> encAlphabet;
 	private int modVal;
 
-	public Hill() {
-		keyMatrix = new int[DIM][DIM];
-		keyMatrix = null;
+	public static Map<Integer,String> decAlphabet;
+	public static Map<String,Integer> encAlphabet;
 
+	/**
+	 * Costruttore della classe.
+	 * Il metodo inizializza le mappe dell'alfameto di codifica.
+	 * inoltre inizializza il cifrario generando una chiave valida in maniera casuale.
+	 */
+	public Hill() {
+		// inizializzazione alfabeto
 		decAlphabet = new HashMap<Integer,String>();
 		encAlphabet = new HashMap<String,Integer>();
 
@@ -32,6 +36,12 @@ public class Hill implements ClassicCipher{
 
 		modVal = encAlphabet.size();
 
+		// inizializzazione a chiave casuale
+		keyMatrix = new int[DIM][DIM];
+		try {
+			setKey(genKey());
+		} catch (MyException e) {
+		}
 	}
 
 	/**
@@ -45,6 +55,9 @@ public class Hill implements ClassicCipher{
 
 		if(keyMatrixInv != null)
 			keyMatrixInv = null;
+
+		if(keyMatrix != null)
+			keyMatrix = null;
 
 		// set key string
 		this.key = key;
