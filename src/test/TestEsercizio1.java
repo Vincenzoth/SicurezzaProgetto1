@@ -13,9 +13,9 @@ public class TestEsercizio1 {
 	public static void main(String[] args) {
 
 		boolean test1 = false;
-		boolean test2 = false;
+		boolean test2 = true;
 		boolean test3 = false;
-		boolean test4 = true;
+		boolean test4 = false;
 
 		Hill cipher = new Hill();
 
@@ -91,8 +91,8 @@ public class TestEsercizio1 {
 			System.out.println("---------------------------------------------------- ");
 			System.out.println("Attacco forza bruta\n");
 
-			String cipherToAttack = "iuaavhsgemtoftmrxpsgj ipiu";
-			//String cipherToAttack = "kgeprrm ,gilzhpn,fhcaposvv,rqrp'pwwdj vb,gkgklweshwmqrosvvzolwilrfxpgoezfnkldiqs";
+			//String cipherToAttack = "iuaavhsgemtoftmrxpsgj ipiu";
+			String cipherToAttack = "kgeprrm ,gilzhpn,fhcaposvv,rqrp'pwwdj vb,gkgklweshwmqrosvvzolwilrfxpgoezfnkldiqs";
 			//String cipherToAttack = "gbgbemumlcdvbb,izn qxpmwatoehldvmg qqumnivlw jmwpoeiyxyhnemwu w,u mnjidqo,fddqdvcvswumlcdvcvswumoe";
 			//String cipherToAttack = "hv ymkne,dxupzmqojqjtmqjrvlqtw,dtvrvphkcqjpzgzzole ham'bsbcujqbjxppzgzbef'xykrvrml'sampzgzjrrvokmbzobyb,qbpzgzjr'be,d bcgwleeknvwffqbjrqhvtrgoydrgnzj'tm yqfzmzo'bwzyqvr";
 			//String cipherToAttack = "x'hi,qtsikgaphpsuowd'dozyuaysefyburrlwk'ekeekcybx'hi,qtsikgaphpsuowd'dozyuaysewdr'mfthyybzir";//inglese
@@ -178,22 +178,25 @@ public class TestEsercizio1 {
 			String filenameBigram = "/text/Jones2004_Bigram.txt";
 			CryptAnalysis analysis = new CryptAnalysis(filenameBigram);
 
-			possiblePairs = analysis.decipher("/text/ciphertext3.txt", bigramsToCompare);
+			possiblePairs = analysis.decipher("/text/ciphertext.txt", bigramsToCompare);
 			
 			try {
 				KeyPlainText bestPossiblePair = possiblePairs.remove(0);
 				System.out.println("\n     Testo in chiaro:");
 				System.out.println("            " + bestPossiblePair.getPlainText());
 				System.out.println("\n     Chiave: '" + bestPossiblePair.getKey() +"'" );
+				
+				System.out.println("\n\nTutte le possibili soluzioni:");
+				System.out.println("soluzioni possibili: "+possiblePairs.size());
+				for(KeyPlainText kpt: possiblePairs) {
+					System.out.println("     CHIAVE: " + kpt.getKey() + "   TESTO IN CHIARO: " + kpt.getPlainText());
+				}
+				
 			}catch(IndexOutOfBoundsException e) {
 				System.out.println("Non è possibile decriptare il testo con "+bigramsToCompare+" diagrammi");
 			}			
 			
-			System.out.println("\n\nTutte le possibili soluzioni:");
-			System.out.println("soluzioni possibili: "+possiblePairs.size());
-			for(KeyPlainText kpt: possiblePairs) {
-				System.out.println("     CHIAVE: " + kpt.getKey() + "   TESTO IN CHIARO: " + kpt.getPlainText());
-			}
+			
 			
 		}
 	}

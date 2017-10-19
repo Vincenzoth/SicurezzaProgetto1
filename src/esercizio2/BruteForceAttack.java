@@ -96,7 +96,7 @@ public class BruteForceAttack {
 						}						
 					}
 
-		if(possiblePairs.size() == 0 && !knownWords.contains("i")) {
+		if(possiblePairs.size() < 5 && !knownWords.contains("i")) {
 			knownWords.add("i");
 			possiblePairs = attack(cipherText);
 		}
