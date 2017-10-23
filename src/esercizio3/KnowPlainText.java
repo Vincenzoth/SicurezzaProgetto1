@@ -60,7 +60,7 @@ public class KnowPlainText {
 		int det = hill.det(detMatrix);
 		
 		//shift plainText e cipherText se det==0
-		for(int i = 4; det==0 && i<=plainText.length(); i+=4) {
+		for(int i = 2; det==0 && i<=plainText.length(); i+=2) {
 			
 			if(i==plainText.length())
 				throw new MyException("Impossibile trovare chiavi");
